@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SemesterProjectManager.Data;
 using SemesterProjectManager.Data.Models;
+using SemesterProjectManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +29,12 @@ namespace SemesterProjectManager
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseSqlServer(
-					Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-				.AddEntityFrameworkStores<ApplicationDbContext>();
+			//services.AddDbContext<ApplicationDbContext>(options =>
+			//	options.UseSqlServer(
+			//		Configuration.GetConnectionString("DefaultConnection")));
+			//services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+			//	.AddEntityFrameworkStores<ApplicationDbContext>();
+			services.AddScoped<ISubjectService, SubjectService>();
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 		}
