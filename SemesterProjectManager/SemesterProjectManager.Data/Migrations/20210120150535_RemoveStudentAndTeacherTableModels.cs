@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SemesterProjectManager.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class RemoveStudentAndTeacherTableModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,13 +78,13 @@ namespace SemesterProjectManager.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    FacultyNumber = table.Column<int>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    AccountType = table.Column<int>(nullable: false),
+                    FacultyNumber = table.Column<int>(nullable: false),
                     TaskId = table.Column<int>(nullable: true),
-                    StudentIdFK = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    StudentIdFK = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -122,8 +122,8 @@ namespace SemesterProjectManager.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -167,8 +167,8 @@ namespace SemesterProjectManager.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

@@ -2,7 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>f7d30db0-23c6-440f-9e4c-64a23824e3fd</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SendGrid" Version="9.22.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SemesterProjectManager.Data.Models\SemesterProjectManager.Data.Models.csproj" />

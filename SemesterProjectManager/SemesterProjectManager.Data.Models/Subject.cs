@@ -12,7 +12,7 @@
 		public int TeacherId { get; set; }
 
 		[Required]
-		public Teacher Teacher { get; set; }
+		public ApplicationUser Teacher { get; set; }
 
 		public ICollection<Topic> Topics { get; set; }
 	}
