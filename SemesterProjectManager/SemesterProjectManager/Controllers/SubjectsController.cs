@@ -9,14 +9,19 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
+	using System.Web.Mvc;
+	using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
 
-	public class SubjectsController : Controller
+	public class SubjectsController : Microsoft.AspNetCore.Mvc.Controller
 	{
-		private ISubjectService subjectService;
+		private readonly ISubjectService subjectService;
+		private readonly IUserService userService;
 
-		public SubjectsController(ISubjectService subjectService)
+		public SubjectsController(ISubjectService subjectService,
+				IUserService userService)
 		{
 			this.subjectService = subjectService;
+			this.userService = userService;
 		}
 
 		[Authorize]
@@ -26,14 +31,18 @@
 			{ 
 				Name = x.Name, 
 				TeacherId = x.TeacherId 
-			}).ToList();
+			})
+			.ToList();
 			
 			return this.View("All", subjects);
 		}
 
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
 		{
-			return this.View();
+			var createVM = new CreateSubjectInputModel();
+			var teachers = await userService.GetTeachersFullName();
+			createVM.TeachersList = teachers;
+			return this.View("Create", createVM);
 		}
 
 		public IActionResult CreateConfirm()

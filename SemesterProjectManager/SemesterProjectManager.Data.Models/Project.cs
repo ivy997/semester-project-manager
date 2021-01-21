@@ -4,7 +4,7 @@
 	{
 		public int StudentId { get; set; }
 
-		public Student Student { get; set; }
+		public ApplicationUser Student { get; set; }
 
 		public Topic Topic { get; set; }
 

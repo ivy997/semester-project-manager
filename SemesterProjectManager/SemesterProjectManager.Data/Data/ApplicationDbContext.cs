@@ -13,9 +13,9 @@ namespace SemesterProjectManager.Data
 		{
 		}
 
-		public DbSet<Student> Students { get; set; }
+		//public DbSet<Student> Students { get; set; }
 
-		public DbSet<Teacher> Teachers { get; set; }
+		//public DbSet<Teacher> Teachers { get; set; }
 
 		public DbSet<Subject> Subjects { get; set; }
 
@@ -54,7 +54,7 @@ namespace SemesterProjectManager.Data
 					  .HasForeignKey("TeacherIdFK");
 			});
 
-			builder.Entity<Student>(entity =>
+			builder.Entity<ApplicationUser>(entity =>
 			{
 				//entity.HasOne(s => s.Topic)
 				//	  .WithMany(tp => tp.Students)
@@ -72,7 +72,7 @@ namespace SemesterProjectManager.Data
 			{
 				entity.HasOne(t => t.Student)
 					  .WithOne(s => s.Task)
-					  .HasForeignKey<Student>(s => s.TaskId);
+					  .HasForeignKey<ApplicationUser>(s => s.TaskId);
 
 				entity.HasOne(t => t.Topic)
 					  .WithOne(tp => tp.Task)

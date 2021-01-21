@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SemesterProjectManager.Data.Models;
+using SemesterProjectManager.Data.Models.Enums;
 
 namespace SemesterProjectManager.Areas.Identity.Pages.Account
 {
@@ -22,17 +23,20 @@ namespace SemesterProjectManager.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager; 
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -71,6 +75,11 @@ namespace SemesterProjectManager.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+			//[EnumDataType(ErrorMessage = "An account type is required.")]
+            [Display(Name = "Account type")]
+            public AccountType AccountType { get; set; }
         }
 
         public async ASYNC.Task OnGetAsync(string returnUrl = null)
@@ -85,12 +94,19 @@ namespace SemesterProjectManager.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser 
+                { 
+                    UserName = Input.Email, 
+                    Email = Input.Email, 
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    AccountType = Input.AccountType,
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    await this.AssignRoleToUser(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -120,6 +136,32 @@ namespace SemesterProjectManager.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private async ASYNC.Task AssignRoleToUser(ApplicationUser user)
+        {
+            var roles = Enum.GetNames(typeof(AccountType));
+
+            await this.CreateRoles(roles);
+
+			foreach (var role in roles)
+			{
+                if (user.AccountType.ToString() == role)
+                {
+                    await _userManager.AddToRoleAsync(user, role);
+                }
+            }
+        }
+
+        private async ASYNC.Task CreateRoles(string[] roles)
+        {
+            foreach (var role in roles)
+            {
+                if (!await _roleManager.RoleExistsAsync(role))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
         }
     }
 }

@@ -97,12 +97,10 @@ namespace SemesterProjectManager.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -139,12 +137,10 @@ namespace SemesterProjectManager.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -162,12 +158,11 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("AccountType")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -177,10 +172,15 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("FacultyNumber")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -209,6 +209,15 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("StudentIdFK")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TaskId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -226,9 +235,11 @@ namespace SemesterProjectManager.Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.HasIndex("TaskId")
+                        .IsUnique()
+                        .HasFilter("[TaskId] IS NOT NULL");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("SemesterProjectManager.Data.Models.Project", b =>
@@ -354,36 +365,6 @@ namespace SemesterProjectManager.Data.Migrations
                     b.ToTable("Topics");
                 });
 
-            modelBuilder.Entity("SemesterProjectManager.Data.Models.Student", b =>
-                {
-                    b.HasBaseType("SemesterProjectManager.Data.Models.ApplicationUser");
-
-                    b.Property<int>("FacultyNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StudentIdFK")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TaskId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("TaskId")
-                        .IsUnique()
-                        .HasFilter("[TaskId] IS NOT NULL");
-
-                    b.HasDiscriminator().HasValue("Student");
-                });
-
-            modelBuilder.Entity("SemesterProjectManager.Data.Models.Teacher", b =>
-                {
-                    b.HasBaseType("SemesterProjectManager.Data.Models.ApplicationUser");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Teacher");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -435,9 +416,16 @@ namespace SemesterProjectManager.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SemesterProjectManager.Data.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("SemesterProjectManager.Data.Models.Task", "Task")
+                        .WithOne("Student")
+                        .HasForeignKey("SemesterProjectManager.Data.Models.ApplicationUser", "TaskId");
+                });
+
             modelBuilder.Entity("SemesterProjectManager.Data.Models.Project", b =>
                 {
-                    b.HasOne("SemesterProjectManager.Data.Models.Student", "Student")
+                    b.HasOne("SemesterProjectManager.Data.Models.ApplicationUser", "Student")
                         .WithOne("Project")
                         .HasForeignKey("SemesterProjectManager.Data.Models.Project", "StudentIdFK")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -445,7 +433,7 @@ namespace SemesterProjectManager.Data.Migrations
 
             modelBuilder.Entity("SemesterProjectManager.Data.Models.Subject", b =>
                 {
-                    b.HasOne("SemesterProjectManager.Data.Models.Teacher", "Teacher")
+                    b.HasOne("SemesterProjectManager.Data.Models.ApplicationUser", "Teacher")
                         .WithMany("Subjects")
                         .HasForeignKey("TeacherIdFK")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -469,15 +457,6 @@ namespace SemesterProjectManager.Data.Migrations
                     b.HasOne("SemesterProjectManager.Data.Models.Task", "Task")
                         .WithOne("Topic")
                         .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "TaskId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SemesterProjectManager.Data.Models.Student", b =>
-                {
-                    b.HasOne("SemesterProjectManager.Data.Models.Task", "Task")
-                        .WithOne("Student")
-                        .HasForeignKey("SemesterProjectManager.Data.Models.Student", "TaskId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

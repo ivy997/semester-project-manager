@@ -1,5 +1,6 @@
 ﻿@page
 @model RegisterModel
+@using SemesterProjectManager.Data.Models.Enums
 @{
     ViewData["Title"] = "Register";
 }
@@ -36,6 +37,15 @@
                 <label asp-for="Input.ConfirmPassword"></label>
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AccountType"></label>
+                <select class="form-control" asp-for="Input.AccountType" asp-items="Html.GetEnumSelectList<AccountType>()">
+                    <option>
+                        Select
+                    </option>
+                </select>
+                @Html.ValidationMessageFor(model => model.Input.AccountType)
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
