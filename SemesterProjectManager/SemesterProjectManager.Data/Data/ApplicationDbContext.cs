@@ -13,10 +13,6 @@ namespace SemesterProjectManager.Data
 		{
 		}
 
-		//public DbSet<Student> Students { get; set; }
-
-		//public DbSet<Teacher> Teachers { get; set; }
-
 		public DbSet<Subject> Subjects { get; set; }
 
 		public DbSet<Topic> Topics { get; set; }
@@ -27,11 +23,6 @@ namespace SemesterProjectManager.Data
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-			//foreach (var relationship in )
-			//{
-			//	relationship.DeleteBehavior = DeleteBehavior.Restrict;
-			//}
-
 			var foreignKeys = builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()).Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
 
 			foreach (var relationship in foreignKeys)
@@ -56,10 +47,6 @@ namespace SemesterProjectManager.Data
 
 			builder.Entity<ApplicationUser>(entity =>
 			{
-				//entity.HasOne(s => s.Topic)
-				//	  .WithMany(tp => tp.Students)
-				//	  .HasForeignKey(s => s.TopicId);
-
 				entity.Property<string>("StudentIdFK");
 
 				entity.HasOne(s => s.Project)

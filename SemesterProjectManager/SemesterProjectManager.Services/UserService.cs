@@ -10,6 +10,7 @@
 	using System.Collections.Generic;
 	using System.Text;
 	using System.Threading.Tasks;
+	using SemesterProjectManager.Web.ViewModels;
 
 	public class UserService : IUserService
 	{
@@ -31,20 +32,20 @@
 			throw new NotImplementedException();
 		}
 
-		public Task<int> GetStudentById()
-		{
-			throw new NotImplementedException();
-		}
+		//public Task<ApplicationUser> GetStudentById()
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		public Task<IList<ApplicationUser>> GetStudents()
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<int> GetTeacherById()
-		{
-			throw new NotImplementedException();
-		}
+		//public async Task<ApplicationUser> GetTeacherById(string id)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		public async Task<IEnumerable<ApplicationUser>> GetTeachers()
 		{
@@ -52,25 +53,39 @@
 			return teachers;
 		}
 
-		public async Task<IEnumerable<string>> GetTeachersFullName()
+		//public async Task<IEnumerable<string>> GetTeachersFullName()
+		//{
+		//	var teachers = await this.GetTeachers();
+		//	var teachersFullNames = new List<string>();
+		//	string fullName = string.Empty;
+
+		//	foreach (var teacher in teachers.ToList())
+		//	{
+		//		fullName = teacher.Title + " " + teacher.FirstName + " " + teacher.LastName;
+		//		teachersFullNames.Add(fullName);
+		//		fullName = string.Empty;
+		//	}
+
+		//	return teachersFullNames;
+		//}
+
+		public async Task<CreateSubjectInputModel> GetTeachersFullNameWithId()
 		{
 			var teachers = await this.GetTeachers();
-			var teachersFullNames = new List<string>();
-			string fullName = string.Empty;
 
-			foreach (var teacher in teachers.ToList())
+			var model = new CreateSubjectInputModel()
 			{
-				fullName = teacher.Title + " " + teacher.FirstName + " " + teacher.LastName;
-				teachersFullNames.Add(fullName);
-				fullName = string.Empty;
-			}
+				Teachers = teachers.ToDictionary(x => x.Id, x => $"{x.Title} {x.FirstName} {x.LastName}")
+			};
 
-			return teachersFullNames;
+			return model;
 		}
 
-		public Task<int> GetUserById()
+		public async Task<ApplicationUser> GetUserById(string id)
 		{
-			throw new NotImplementedException();
+			var user = await this.userManager.FindByIdAsync(id);
+
+			return user;
 		}
 	}
 }

@@ -3,16 +3,27 @@
 	using System;
 	using System.Text;
 	using System.Collections.Generic;
-	
+	using ASYNC = System.Threading.Tasks;
+
 	using SemesterProjectManager.Data.Models;
 	using SemesterProjectManager.Web.ViewModels;
 
 	public interface ISubjectService
 	{
-		public List<Subject> GetAll();
+		public IEnumerable<SubjectServiceModel> GetAll();
 
-		public int Create(CreateSubjectInputModel input);
+		public ASYNC.Task<Subject> GetById(int id);
 
-		public int GetById();
+		public void CreateAsync(CreateSubjectInputModel input);
+
+		public ASYNC.Task<SubjectDetailsServiceModel> Details(int id);
+
+		public void Edit(CreateSubjectInputModel input, int id);
+
+		public ASYNC.Task<SubjectServiceModel> Delete(int id);
+
+		public ASYNC.Task DeleteConfirmed(int id);
+
+		//public string Test(int id);
 	}
 }
