@@ -2,7 +2,7 @@
 {
 	public class Project : BaseModel<int>
 	{
-		public int StudentId { get; set; }
+		public string StudentId { get; set; }
 
 		public ApplicationUser Student { get; set; }
 

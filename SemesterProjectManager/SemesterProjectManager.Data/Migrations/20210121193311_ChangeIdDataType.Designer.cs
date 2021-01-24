@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SemesterProjectManager.Data;
 
 namespace SemesterProjectManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121193311_ChangeIdDataType")]
+    partial class ChangeIdDataType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -333,10 +335,10 @@ namespace SemesterProjectManager.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ExpirationDate")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan?>("ExpirationDuration")
+                        .HasColumnType("time");
 
-                    b.Property<int?>("ProjectId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.Property<int>("StateOfTopic")
@@ -345,7 +347,7 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TaskId")
+                    b.Property<int>("TaskId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -355,14 +357,12 @@ namespace SemesterProjectManager.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId")
-                        .IsUnique()
-                        .HasFilter("[ProjectId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("SubjectId");
 
                     b.HasIndex("TaskId")
-                        .IsUnique()
-                        .HasFilter("[TaskId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Topics");
                 });
@@ -444,7 +444,9 @@ namespace SemesterProjectManager.Data.Migrations
                 {
                     b.HasOne("SemesterProjectManager.Data.Models.Project", "Project")
                         .WithOne("Topic")
-                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "ProjectId");
+                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("SemesterProjectManager.Data.Models.Subject", "Subject")
                         .WithMany("Topics")
@@ -454,7 +456,9 @@ namespace SemesterProjectManager.Data.Migrations
 
                     b.HasOne("SemesterProjectManager.Data.Models.Task", "Task")
                         .WithOne("Topic")
-                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "TaskId");
+                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

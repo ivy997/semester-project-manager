@@ -27,5 +27,7 @@
 		public string Title { get; set; }
 
 		public ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
+
+		//public virtual ICollection<IdentityUserRole<string>> Roles { get; set; } = new HashSet<IdentityUserRole<string>>();
 	}
 }

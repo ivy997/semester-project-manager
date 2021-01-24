@@ -2,16 +2,14 @@
 {
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class Subject : BaseModel<int>
 	{
 		[Required]
 		public string Name { get; set; }
 
-		public int TeacherId { get; set; }
+		public string TeacherId { get; set; }
 
-		[Required]
 		public ApplicationUser Teacher { get; set; }
 
 		public ICollection<Topic> Topics { get; set; }
