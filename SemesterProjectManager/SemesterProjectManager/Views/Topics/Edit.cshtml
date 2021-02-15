@@ -10,6 +10,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            @Html.HiddenFor(m => m.SubjectId)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -22,14 +23,14 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                    <label asp-for="StateOfApproval"></label>
-                    <select class="form-control" asp-for="StateOfApproval" 
-                            asp-items="@Html.GetEnumSelectList(typeof(SemesterProjectManager.Data.Models.Enums.StateOfApproval))">
-                        <option>
-                            Select
-                        </option>
-                    </select>
-                </div>
+                <label asp-for="StateOfApproval"></label>
+                <select class="form-control" asp-for="StateOfApproval"
+                        asp-items="@Html.GetEnumSelectList(typeof(SemesterProjectManager.Data.Models.Enums.StateOfApproval))">
+                    <option>
+                        Select
+                    </option>
+                </select>
+            </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -39,7 +40,7 @@
 </div>
 
 <div>
-    <a asp-controller="Subjects" asp-action="All">Back to List</a>
+    <a asp-controller="Subjects" asp-action="Details" asp-route-id="@Model.SubjectId">Back to List</a>
 </div>
 
 @section Scripts {

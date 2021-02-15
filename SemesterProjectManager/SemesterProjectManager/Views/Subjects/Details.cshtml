@@ -29,11 +29,11 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Topics)
-                <a asp-route-subjectId="@Model.Id" asp-controller="Topics" asp-action="Create">Create New</a>
+                @if (User.IsInRole("Teacher"))
+                {
+                    <a asp-route-subjectId="@Model.Id" asp-controller="Topics" asp-action="Create">Create New</a>
+                }
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.TeacherFullName)
-            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -47,9 +47,12 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a asp-controller="Topics" asp-action="Edit" asp-route-id="@item.Id">Edit</a> @*|
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <a asp-controller="Topics" asp-action="Edit" asp-route-subjectId="@Model.Id" asp-route-id="@item.Id">Edit</a>
+                            <a asp-controller="Topics" asp-action="Delete" asp-route-subjectId="@Model.Id" asp-route-id="@item.Id">Delete</a>
+                        }
+                        <a asp-controller="Topics" asp-action="Details" asp-route-id="@item.Id">Details</a>
                     </td>
                 </tr>
             }
@@ -57,7 +60,10 @@
     </tbody>
 </table>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
+    @*@if (User.IsInRole("Teacher"))
+    {
+        <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    }*@
     <a asp-action="All">Back to List</a>
 </div>

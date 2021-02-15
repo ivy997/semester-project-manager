@@ -3,7 +3,6 @@
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.EntityFrameworkCore;
 	using SemesterProjectManager.Data;
-	using SemesterProjectManager.Data.Models;
 	using SemesterProjectManager.Services;
 	using SemesterProjectManager.Web.ViewModels;
 	using System.Collections.Generic;
@@ -46,6 +45,7 @@
 			return this.View("All", subjects);
 		}
 
+		[Authorize(Roles = "Teacher")]
 		public async Task<IActionResult> Create()
 		{
 			var teachersModel = await this.userService.GetTeachersFullNameWithId();
@@ -53,6 +53,7 @@
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Teacher")]
 		public IActionResult Create(CreateSubjectInputModel model)
 		{
 			if (ModelState.IsValid)
@@ -65,11 +66,6 @@
 
 		public async Task<ActionResult<string>> Details(int id)
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
 			var subjectModel = await this.subjectService.Details(id);
 
 			if (subjectModel == null)
@@ -90,6 +86,7 @@
 			return View(subjectViewModel);
 		}
 
+		[Authorize(Roles = "Teacher")]
 		public async Task<IActionResult> Edit(int id)
 		{
 			if (id == null)
@@ -116,19 +113,16 @@
 		}
 
 		[HttpPost, ActionName("Edit")]
+		[Authorize(Roles = "Teacher")]
 		[ValidateAntiForgeryToken]
 		public IActionResult EditPost(CreateSubjectInputModel input, int id)
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
 			this.subjectService.Edit(input, id);
 
 			return RedirectToAction(nameof(All));
 		}
 
+		[Authorize(Roles = "Teacher")]
 		public async Task<IActionResult> Delete(int id, bool? saveChangesError = false)
 		{
 			var subject = await this.subjectService.Delete(id);
@@ -157,6 +151,7 @@
 		}
 
 		[HttpPost, ActionName("Delete")]
+		[Authorize(Roles = "Teacher")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{

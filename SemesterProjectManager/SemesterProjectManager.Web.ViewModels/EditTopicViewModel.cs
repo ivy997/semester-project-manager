@@ -1,6 +1,8 @@
 ﻿namespace SemesterProjectManager.Web.ViewModels
 {
+	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
+	using SemesterProjectManager.Data.Models;
 	using SemesterProjectManager.Data.Models.Enums;
 
 	public class EditTopicViewModel
@@ -17,9 +19,19 @@
 		[Display(Name = "Description")]
 		public string Description { get; set; }
 
-		//[Required]
+		[Required]
 		[Display(Name = "State of approval")]
 		[EnumDataType(typeof(StateOfApproval))]
 		public StateOfApproval StateOfApproval { get; set; }
+
+		public int SubjectId { get; set; }
+
+		public IEnumerable<TaskViewModel> Tasks { get; set; }
+
+		public ProjectViewModel Project { get; set; }
+
+		//public BufferedSingleFileUploadDbModel FileUpload { get; set; }
+
+		//public CreateTaskViewModel CreateTask { get; set; }
 	}
 }

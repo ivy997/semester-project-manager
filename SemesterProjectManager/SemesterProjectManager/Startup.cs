@@ -43,6 +43,8 @@ namespace SemesterProjectManager
 			services.AddScoped<ISubjectService, SubjectService>();
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<ITopicService, TopicService>();
+			services.AddScoped<ITaskService, TaskService>();
+			services.AddScoped<IProjectService, ProjectService>();
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 		}

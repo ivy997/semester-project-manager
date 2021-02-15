@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SemesterProjectManager.Data;
 
 namespace SemesterProjectManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210131135527_RemoveRequiredAttributeFromMainTaskInTask")]
+    partial class RemoveRequiredAttributeFromMainTaskInTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,9 +208,6 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -252,15 +251,6 @@ namespace SemesterProjectManager.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte[]>("ProjectFile")
                         .HasColumnType("varbinary(max)");
 
@@ -272,9 +262,6 @@ namespace SemesterProjectManager.Data.Migrations
 
                     b.Property<string>("StudentIdFK")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TopicId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -437,8 +424,7 @@ namespace SemesterProjectManager.Data.Migrations
                 {
                     b.HasOne("SemesterProjectManager.Data.Models.Task", "Task")
                         .WithOne("Student")
-                        .HasForeignKey("SemesterProjectManager.Data.Models.ApplicationUser", "TaskId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SemesterProjectManager.Data.Models.ApplicationUser", "TaskId");
                 });
 
             modelBuilder.Entity("SemesterProjectManager.Data.Models.Project", b =>
@@ -461,7 +447,7 @@ namespace SemesterProjectManager.Data.Migrations
                     b.HasOne("SemesterProjectManager.Data.Models.Topic", "Topic")
                         .WithMany("Tasks")
                         .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -469,13 +455,12 @@ namespace SemesterProjectManager.Data.Migrations
                 {
                     b.HasOne("SemesterProjectManager.Data.Models.Project", "Project")
                         .WithOne("Topic")
-                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "ProjectId");
 
                     b.HasOne("SemesterProjectManager.Data.Models.Subject", "Subject")
                         .WithMany("Topics")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

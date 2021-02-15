@@ -1,9 +1,9 @@
 ﻿namespace SemesterProjectManager.Data.Models
 {
-	using Microsoft.AspNetCore.Identity;
-	using SemesterProjectManager.Data.Models.Enums;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
+	using Microsoft.AspNetCore.Identity;
+	using SemesterProjectManager.Data.Models.Enums;
 
 	public class ApplicationUser : IdentityUser
 	{
@@ -22,12 +22,12 @@
 
 		public Task Task { get; set; }
 
+		public int? ProjectId { get; set; }
+
 		public Project Project { get; set; }
 
 		public string Title { get; set; }
 
 		public ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
-
-		//public virtual ICollection<IdentityUserRole<string>> Roles { get; set; } = new HashSet<IdentityUserRole<string>>();
 	}
 }
