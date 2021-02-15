@@ -15,5 +15,7 @@
 		public void CreateAsync(CreateTopicInputModel input);
 
 		public void Edit(EditTopicViewModel input, int id);
+
+		public ASYNC.Task Delete(int id);
 	}
 }

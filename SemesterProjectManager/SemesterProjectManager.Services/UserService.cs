@@ -1,14 +1,12 @@
 ﻿namespace SemesterProjectManager.Services
 {
 	using Microsoft.AspNetCore.Identity;
-	using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Internal;
 	using SemesterProjectManager.Data;
 	using SemesterProjectManager.Data.Models;
 	using SemesterProjectManager.Data.Models.Enums;
 	using System;
 	using System.Linq;
 	using System.Collections.Generic;
-	using System.Text;
 	using System.Threading.Tasks;
 	using SemesterProjectManager.Web.ViewModels;
 
@@ -32,20 +30,10 @@
 			throw new NotImplementedException();
 		}
 
-		//public Task<ApplicationUser> GetStudentById()
-		//{
-		//	throw new NotImplementedException();
-		//}
-
 		public Task<IList<ApplicationUser>> GetStudents()
 		{
 			throw new NotImplementedException();
 		}
-
-		//public async Task<ApplicationUser> GetTeacherById(string id)
-		//{
-		//	throw new NotImplementedException();
-		//}
 
 		public async Task<IEnumerable<ApplicationUser>> GetTeachers()
 		{

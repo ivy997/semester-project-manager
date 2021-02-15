@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SemesterProjectManager.Data;
 
 namespace SemesterProjectManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210130152747_FixDataTypeOfStudentIdInTaskModel")]
+    partial class FixDataTypeOfStudentIdInTaskModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,9 +208,6 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -252,15 +251,6 @@ namespace SemesterProjectManager.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte[]>("ProjectFile")
                         .HasColumnType("varbinary(max)");
 
@@ -272,9 +262,6 @@ namespace SemesterProjectManager.Data.Migrations
 
                     b.Property<string>("StudentIdFK")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TopicId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -326,6 +313,7 @@ namespace SemesterProjectManager.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("MainTask")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OutputData")
@@ -338,8 +326,6 @@ namespace SemesterProjectManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TopicId");
 
                     b.ToTable("Tasks");
                 });
@@ -367,6 +353,9 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TaskId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -378,6 +367,10 @@ namespace SemesterProjectManager.Data.Migrations
                         .HasFilter("[ProjectId] IS NOT NULL");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("TaskId")
+                        .IsUnique()
+                        .HasFilter("[TaskId] IS NOT NULL");
 
                     b.ToTable("Topics");
                 });
@@ -437,8 +430,7 @@ namespace SemesterProjectManager.Data.Migrations
                 {
                     b.HasOne("SemesterProjectManager.Data.Models.Task", "Task")
                         .WithOne("Student")
-                        .HasForeignKey("SemesterProjectManager.Data.Models.ApplicationUser", "TaskId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SemesterProjectManager.Data.Models.ApplicationUser", "TaskId");
                 });
 
             modelBuilder.Entity("SemesterProjectManager.Data.Models.Project", b =>
@@ -456,27 +448,21 @@ namespace SemesterProjectManager.Data.Migrations
                         .HasForeignKey("TeacherIdFK");
                 });
 
-            modelBuilder.Entity("SemesterProjectManager.Data.Models.Task", b =>
-                {
-                    b.HasOne("SemesterProjectManager.Data.Models.Topic", "Topic")
-                        .WithMany("Tasks")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SemesterProjectManager.Data.Models.Topic", b =>
                 {
                     b.HasOne("SemesterProjectManager.Data.Models.Project", "Project")
                         .WithOne("Topic")
-                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "ProjectId");
 
                     b.HasOne("SemesterProjectManager.Data.Models.Subject", "Subject")
                         .WithMany("Topics")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("SemesterProjectManager.Data.Models.Task", "Task")
+                        .WithOne("Topic")
+                        .HasForeignKey("SemesterProjectManager.Data.Models.Topic", "TaskId");
                 });
 #pragma warning restore 612, 618
         }

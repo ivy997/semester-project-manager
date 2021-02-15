@@ -10,11 +10,14 @@
 			this.CreatedOn = DateTime.UtcNow.Date;
 		}
 
+		public string StudentId { get; set; }
+
 		public ApplicationUser Student{ get; set; }
+
+		public int TopicId { get; set; }
 
 		public Topic Topic { get; set; }
 
-		[Required]
 		public string MainTask { get; set; }
 
 		public string OutputData { get; set; }

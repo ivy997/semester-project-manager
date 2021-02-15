@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20210113160720_Initial.cs" />
     <Compile Remove="Data\Migrations\20210113160720_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210125141835_AddUniqueConstraintToAppUserFacultyNumber.cs" />
+    <Compile Remove="Migrations\20210125141835_AddUniqueConstraintToAppUserFacultyNumber.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,10 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SemesterProjectManager.Data.Models\SemesterProjectManager.Data.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿namespace SemesterProjectManager.Data.Models
 {
 	using System;
+	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using SemesterProjectManager.Data.Models.Enums;
 
@@ -9,6 +10,7 @@
 		public Topic()
 		{
 			this.StateOfTopic = StateOfApproval.Available;
+			this.Tasks = new HashSet<Task>();
 			//this.ExpirationDate = DateTime.UtcNow.AddDays(7);
 		}
 
@@ -24,9 +26,9 @@
 
 		public Subject Subject { get; set; }
 
-		public int? TaskId { get; set; }
+		//public int? TaskId { get; set; }
 
-		public Task Task { get; set; }
+		//public Task Task { get; set; }
 
 		public int? ProjectId { get; set; }
 
@@ -35,6 +37,6 @@
 		// If the Topic the student chose is not approved
 		public DateTime? ExpirationDate { get; set; }
 
-		//public ICollection<Student> Students { get; set; } 
+		public ICollection<Task> Tasks { get; set; } 
 	}
 }

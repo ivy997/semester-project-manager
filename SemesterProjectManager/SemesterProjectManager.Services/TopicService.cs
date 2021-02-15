@@ -73,5 +73,13 @@
 			this.context.Topics.Update(topicToUpdate);
 			this.context.SaveChanges();
 		}
+
+		public async ASYNC.Task Delete(int id)
+		{
+			var topic = await this.GetById(id);
+
+			this.context.Topics.Remove(topic);
+			this.context.SaveChanges();
+		}
 	}
 }

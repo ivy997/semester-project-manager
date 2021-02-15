@@ -121,7 +121,7 @@
 
 			this.context.Subjects.Remove(subject);
 			this.context.SaveChanges();
-		}
+		}	
 
 		//public string Test(int id)
 		//{
