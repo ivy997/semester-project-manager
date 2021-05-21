@@ -23,13 +23,15 @@
 		private readonly ITaskService taskService;
 		private readonly IUserService userService;
 		private readonly IProjectService projectService;
+		private readonly ISubjectService subjectService;
 
 		public TopicsController(ApplicationDbContext context,
 			UserManager<ApplicationUser> userManager,
 			ITopicService topicService,
 			ITaskService taskService,
 			IUserService userService,
-			IProjectService projectService)
+			IProjectService projectService,
+			ISubjectService subjectService)
 		{
 			this.context = context;
 			this.userManager = userManager;
@@ -37,6 +39,7 @@
 			this.taskService = taskService;
 			this.userService = userService;
 			this.projectService = projectService;
+			this.subjectService = subjectService;
 		}
 
 		[Authorize(Roles = "Teacher")]
@@ -107,6 +110,8 @@
 			var topic = await this.topicService.GetById(id);
 			var user = await this.userManager.GetUserAsync(this.User);
 			var project = await this.projectService.GetByStudentId(user.Id);
+			var subject = await this.subjectService.GetById(topic.SubjectId);
+			var teacher = await this.userService.GetUserById(subject.TeacherId);
 
 			if (topic == null)
 			{
@@ -166,6 +171,8 @@
 				StateOfApproval = topic.StateOfTopic,
 				SubjectId = topic.SubjectId,
 				Tasks = tasksForView,
+				FacultyNumber = user.FacultyNumber,
+				TeacherFullName = $"{teacher.Title} {teacher.FirstName} {teacher.LastName}",
 			};
 
 			return View(topicViewModel);

@@ -7,6 +7,7 @@
 	using SemesterProjectManager.Data.Models;
 	using SemesterProjectManager.Data.Models.Enums;
 	using SemesterProjectManager.Web.ViewModels;
+	using SendGrid;
 	using System;
 	using System.Collections.Generic;
 	using System.IO;

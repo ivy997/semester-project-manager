@@ -12,6 +12,8 @@
 	using System.Collections.Generic;
 	using SemesterProjectManager.Web.ViewModels;
 	using Microsoft.AspNetCore.Authorization;
+	using System.IO;
+	using System;
 
 	public class ProjectsController : Controller
 	{
@@ -76,8 +78,13 @@
 				if (files != null)
 				{
 					await this.projectService.Upload(id, user, files);
+					TempData["Success"] = "Project file has been uploaded successfully.";
 				}
-				TempData["Success"] = "Project file has been uploaded successfully.";
+				else
+				{
+					TempData["Fail"] = "Choose a file to upload.";
+				}
+				//return LocalRedirect(new RouteValueDictionary(new { controller = "Topics", action = "Details", Id = id }).ToString());
 				return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Topics", action = "Details", Id = id }));
 			}
 			catch (DbUpdateException)
@@ -85,6 +92,65 @@
 				return RedirectToAction("Details", "Topics", new { id = id });
 			}
 		}
+
+
+		//protected void DownloadFile(object sender, EventArgs e)
+		//{
+		//	int id = int.Parse((sender as LinkButton).CommandArgument);
+		//	byte[] bytes;
+		//	string fileName, contentType;
+		//	string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+		//	using (SqlConnection con = new SqlConnection(constr))
+		//	{
+		//		using (SqlCommand cmd = new SqlCommand())
+		//		{
+		//			cmd.CommandText = "select Name, Data, ContentType from tblFiles where Id=@Id";
+		//			cmd.Parameters.AddWithValue("@Id", id);
+		//			cmd.Connection = con;
+		//			con.Open();
+		//			using (SqlDataReader sdr = cmd.ExecuteReader())
+		//			{
+		//				sdr.Read();
+		//				bytes = (byte[])sdr["Data"];
+		//				contentType = sdr["ContentType"].ToString();
+		//				fileName = sdr["Name"].ToString();
+		//			}
+		//			con.Close();
+		//		}
+		//	}
+		//	Response.Clear();
+		//	Response.Buffer = true;
+		//	Response.Charset = "";
+		//	Response.Cache.SetCacheability(HttpCacheability.NoCache);
+		//	Response.ContentType = contentType;
+		//	Response.AppendHeader("Content-Disposition", "attachment; filename=" + fileName);
+		//	Response.BinaryWrite(bytes);
+		//	Response.Flush();
+		//	Response.End();
+		//}
+
+
+
+		//public async ASYNC.Task<IActionResult> Download(string filename)
+		//{
+		//	if (filename == null)
+		//	{
+		//		return Content("filename not present");
+		//	}
+
+		//	var path = @"C:\Users\Ivy T\Downloads";
+
+		//	var memory = new MemoryStream();
+		//	using (var stream = new FileStream(path, FileMode.Open))
+		//	{
+		//		await stream.CopyToAsync(memory);
+		//	}
+		//	memory.Position = 0;
+
+		//	var ext = Path.GetExtension(path).ToLowerInvariant();
+
+		//	return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
+		//}
 
 		[Authorize(Roles = "Teacher")]
 		public async ASYNC.Task<IActionResult> Edit(int id)
@@ -173,6 +239,17 @@
 				//Log the error (uncomment ex variable name and write a log.)
 				return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
 			}
+		}
+
+		private Dictionary<string, string> GetMimeTypes()
+		{
+			return new Dictionary<string, string>
+			{
+				{".pdf", "application/pdf"},
+				{".doc", "application/vnd.ms-word"},
+				{".docx", "application/vnd.ms-word"},
+				{".zip", "application/zip"}
+			};
 		}
 	}
 }

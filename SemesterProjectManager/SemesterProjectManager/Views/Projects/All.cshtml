@@ -5,68 +5,120 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Projects</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentFullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FacultyNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TopicName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FileName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </th>
-            <th colspan="3">
-                @Html.DisplayNameFor(model => model.Score)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(../images/page-banner-2.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont pb-20">
+                    <!--The padding here is changing the length of the image, fix it*-->
+                    <h2>Projects</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Projects</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+
+<section id="teachers-page" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+                @foreach (var item in Model)
+                {
+                     <div class="col-lg-3 col-md-6 col-sm-8">
+                         <div class="singel-teachers mt-30 text-center">
+                             <div class="image">
+                                 <img src="../images/teachers/t-1.jpg" alt="Teachers">
+                             </div>
+                             <div class="cont">
+                                 <a asp-action="Details" asp-route-id="@item.Id"><h6>@Html.DisplayFor(modelItem => item.TopicName)</h6></a>
+                                 <span>@Html.DisplayFor(modelItem => item.StudentFullName)</span>
+                                 <span>@Html.DisplayFor(modelItem => item.FacultyNumber)</span>
+                             </div>
+                         </div>
+                         <div class="singel-publication">
+                             <div class="cont">
+                                 <div class="button text-left">
+                                     <a class="main-btn hover-success" style="width: 69px" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                 </div>
+                                 <div class="button text-right">
+                                     <a class="main-btn hover-danger" style="width: 69px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 }
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+@*<div class="container">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentFullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FacultyNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TopicName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FileName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedOn)
-                </td>
-                <td colspan="3">
-                    @if (item.Score == 0)
-                    {
-                        <p>Not rated</p>
-                        @Html.DisplayText("Not rated")
-                    }
-                    else
-                    {
-                        <p>@Html.DisplayFor(modelItem => item.Score)/100</p>
-                    }
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> @*|
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentFullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FacultyNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TopicName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FileName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedOn)
+                </th>
+                <th colspan="3">
+                    @Html.DisplayNameFor(model => model.Score)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentFullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FacultyNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TopicName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    <td colspan="3">
+                        @if (item.Score == 0)
+                        {
+                            <p>Not rated</p>
+                            @Html.DisplayText("Not rated")
+                        }
+                        else
+                        {
+                            <p>@Html.DisplayFor(modelItem => item.Score)/100</p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>*@

@@ -1,6 +1,7 @@
 ﻿namespace SemesterProjectManager.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Routing;
 	using Microsoft.EntityFrameworkCore;
 	using SemesterProjectManager.Data;
 	using SemesterProjectManager.Services;
@@ -89,11 +90,6 @@
 		[Authorize(Roles = "Teacher")]
 		public async Task<IActionResult> Edit(int id)
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
 			var subject = await this.subjectService.GetById(id);
 
 			if (subject == null)
@@ -119,6 +115,12 @@
 		{
 			this.subjectService.Edit(input, id);
 
+			//return RedirectToAction("Details", new RouteValueDictionary(new
+			//{
+			//	controller = "Subjects",
+			//	action = "Details",
+			//	Id = id,
+			//}));
 			return RedirectToAction(nameof(All));
 		}
 

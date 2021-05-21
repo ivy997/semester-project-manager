@@ -1,47 +1,49 @@
 ﻿@model SemesterProjectManager.Web.ViewModels.CreateSubjectInputModel
-@{
-    ViewData["Title"] = "Create";
-}
+@{ ViewData["Title"] = "Create"; }
 
-@{
-    var teachersSelectListItems = Model.Teachers
-        .Select(x => new SelectListItem
-        {
-            Text = x.Value.ToString(),
-            Value = x.Key.ToString()
-        });
-}
+@{ var teachersSelectListItems = Model.Teachers.Select(x => new SelectListItem
+    {
+        Text = x.Value.ToString(),
+        Value = x.Key.ToString()
+    }); }
 
-<h1>Create</h1>
-
-<h4>Subject</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="container">
+    <h2>Create</h2>
+    <h4 class="title pt-10 pb-25">Subject</h4>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @*<label asp-for="Name" class="control-label"></label>*@
+                    <input asp-for="Name" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TeacherId" class="control-label"></label>
-                <select class="form-control" asp-for="TeacherId"
-                    asp-items="teachersSelectListItems">
-                    <option value="">Select</option>
-                </select>
-                <span class="form-text" asp-validation-for="TeacherId"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @*<label asp-for="TeacherId" class="control-label"></label>*@
+                    <select class="form-control" asp-for="TeacherId"
+                            asp-items="teachersSelectListItems">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="form-text" asp-validation-for="TeacherId"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+        <div class="row">
+            <div class="col-md-6 pt-30 pb-10">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="main-btn " />
+                </div>
             </div>
-        </form>
+        </div>
+    </form>
+    <div>
+        <a asp-action="All"><h6>Back to List</h6></a>
     </div>
-</div>
-
-<div>
-    <a asp-action="All">Back to List</a>
 </div>
 
 @section Scripts {
