@@ -1,10 +1,13 @@
 ﻿namespace SemesterProjectManager.Web.ViewModels
 {
+	using Microsoft.AspNetCore.Mvc.RazorPages;
 	using System;
 	using System.ComponentModel.DataAnnotations;
 
-	public class ProjectViewModel
+	public class ProjectViewModel : PageModel
 	{
+		
+
 		public int Id { get; set; }
 
 		public int TopicId { get; set; }

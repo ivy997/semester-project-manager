@@ -8,6 +8,8 @@
 
 	public interface ITaskService
 	{
+		public IEnumerable<TaskServiceModel> GetAll();
+
 		public ASYNC.Task Create(CreateTaskViewModel taskModel);
 
 		public ASYNC.Task<IEnumerable<TaskServiceModel>> GetAllByTopicId(int topicId);

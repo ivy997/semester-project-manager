@@ -93,64 +93,27 @@
 			}
 		}
 
+		public async ASYNC.Task<IActionResult> Download(int id)
+		{
+			Project project = await this.projectService.GetById(id);
+			ApplicationUser student = await this.userService.GetUserById(project.StudentId);
 
-		//protected void DownloadFile(object sender, EventArgs e)
-		//{
-		//	int id = int.Parse((sender as LinkButton).CommandArgument);
-		//	byte[] bytes;
-		//	string fileName, contentType;
-		//	string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-		//	using (SqlConnection con = new SqlConnection(constr))
-		//	{
-		//		using (SqlCommand cmd = new SqlCommand())
-		//		{
-		//			cmd.CommandText = "select Name, Data, ContentType from tblFiles where Id=@Id";
-		//			cmd.Parameters.AddWithValue("@Id", id);
-		//			cmd.Connection = con;
-		//			con.Open();
-		//			using (SqlDataReader sdr = cmd.ExecuteReader())
-		//			{
-		//				sdr.Read();
-		//				bytes = (byte[])sdr["Data"];
-		//				contentType = sdr["ContentType"].ToString();
-		//				fileName = sdr["Name"].ToString();
-		//			}
-		//			con.Close();
-		//		}
-		//	}
-		//	Response.Clear();
-		//	Response.Buffer = true;
-		//	Response.Charset = "";
-		//	Response.Cache.SetCacheability(HttpCacheability.NoCache);
-		//	Response.ContentType = contentType;
-		//	Response.AppendHeader("Content-Disposition", "attachment; filename=" + fileName);
-		//	Response.BinaryWrite(bytes);
-		//	Response.Flush();
-		//	Response.End();
-		//}
+			if (project.ProjectFile == null)
+			{
+				return RedirectToAction("All", "Projects");
+			}
+			else
+			{
+				byte[] file = project.ProjectFile;
+				string mimeType = GetMimeTypes()[$".{project.FileType}"];
+				var result = new FileContentResult(file, mimeType);
+				result.FileDownloadName = $"{project.FileName} - " +
+									   $"{student.FirstName}_{student.LastName}_{student.FacultyNumber} - " +
+									   $"{project.CreatedOn}.{project.FileType}";
 
-
-
-		//public async ASYNC.Task<IActionResult> Download(string filename)
-		//{
-		//	if (filename == null)
-		//	{
-		//		return Content("filename not present");
-		//	}
-
-		//	var path = @"C:\Users\Ivy T\Downloads";
-
-		//	var memory = new MemoryStream();
-		//	using (var stream = new FileStream(path, FileMode.Open))
-		//	{
-		//		await stream.CopyToAsync(memory);
-		//	}
-		//	memory.Position = 0;
-
-		//	var ext = Path.GetExtension(path).ToLowerInvariant();
-
-		//	return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
-		//}
+				return result;
+			}
+		}
 
 		[Authorize(Roles = "Teacher")]
 		public async ASYNC.Task<IActionResult> Edit(int id)

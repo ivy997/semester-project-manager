@@ -25,6 +25,21 @@
 			this.userService = userService;
 		}
 
+		public IEnumerable<TaskServiceModel> GetAll()
+		{
+			var tasks = this.context.Tasks
+				.Select(x => new TaskServiceModel()
+				{
+					Id = x.Id,
+					StudentId = x.StudentId,
+					TopicId = x.TopicId,
+					CreatedOn = x.CreatedOn,
+					IsApproved = x.IsApproved,
+				});
+
+			return tasks;
+		}
+
 		public async ASYNC.Task<IEnumerable<TaskServiceModel>> GetAllByTopicId(int topicId)
 		{
 			var tasks = this.context.Tasks

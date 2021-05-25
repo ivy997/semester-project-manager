@@ -66,7 +66,7 @@
                 {
                     TopicId = id,
                     StudentId = studentId,
-                    FileName = newFileName,
+                    FileName = fileName,
                     FileType = fileExtension,
                 };
 

@@ -12,23 +12,45 @@
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Routing;
 	using Microsoft.AspNetCore.Authorization;
+	using System.Collections.Generic;
 
 	public class TasksController : Controller
 	{
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<ApplicationUser> userManager;
+		private readonly ITopicService topicService;
 		private readonly ITaskService taskService;
 		private readonly IUserService userService;
 
 		public TasksController(ApplicationDbContext context,
 			UserManager<ApplicationUser> userManager,
+			ITopicService topicService,
 			ITaskService taskService,
 			IUserService userService)
 		{
 			this.context = context;
 			this.userManager = userManager;
+			this.topicService = topicService;
 			this.taskService = taskService;
 			this.userService = userService;
+		}
+
+		[Authorize(Roles = "Teacher")]
+		public ActionResult<IEnumerable<TaskViewModel>> All()
+		{
+			var tasks = this.taskService.GetAll().Select(x => new TaskViewModel()
+			{
+				Id = x.Id,
+				StudentFullName = $"{this.userService.GetUserById(x.StudentId).Result.FirstName} " +
+								  $"{this.userService.GetUserById(x.StudentId).Result.LastName}",
+				FacultyNumber = this.userService.GetUserById(x.StudentId).Result.FacultyNumber,
+				TopicName = this.topicService.GetById(x.TopicId).Result.Title,
+				CreatedOn = x.CreatedOn,
+				IsApproved = x.IsApproved,
+			});
+			//var tasksViewModels = new TaskViewModel
+			return this.View("All", tasks);
+			//return tasks;
 		}
 
 		[Authorize(Roles = "Student")]

@@ -20,6 +20,17 @@
 			this.context = context;
 		}
 
+		public IEnumerable<TopicViewModel> GetAll()
+		{
+			var topics = this.context.Topics.Select(x => new TopicViewModel
+			{
+				Id = x.Id,
+				Name = x.Title,
+			});
+
+			return topics;
+		}
+
 		public void CreateAsync(CreateTopicInputModel input)
 		{
 			// Async methods don't save object to db

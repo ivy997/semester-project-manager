@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemesterProjectManager.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemesterProjectManager.Web.ViewModels", "SemesterProjectManager.Web.ViewModels\SemesterProjectManager.Web.ViewModels.csproj", "{988F0E47-E0A8-4C86-8706-11E3B0BC0AC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemesterProjectManager.Services", "SemesterProjectManager.Services\SemesterProjectManager.Services.csproj", "{E4AC3892-DD68-4CE2-AC1D-55CBFE25E705}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemesterProjectManager.Services", "SemesterProjectManager.Services\SemesterProjectManager.Services.csproj", "{E4AC3892-DD68-4CE2-AC1D-55CBFE25E705}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

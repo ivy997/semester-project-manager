@@ -42,6 +42,14 @@
 			this.subjectService = subjectService;
 		}
 
+		[Authorize]
+		public ActionResult<IEnumerable<SubjectViewModel>> All()
+		{
+			var topics = this.topicService.GetAll();
+
+			return this.View("All", topics);
+		}
+
 		[Authorize(Roles = "Teacher")]
 		public IActionResult Create(int subjectId)
 		{
