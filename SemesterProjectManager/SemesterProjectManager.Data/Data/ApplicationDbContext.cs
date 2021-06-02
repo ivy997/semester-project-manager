@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SemesterProjectManager.Data.Models;
-using System.Linq;
 
 namespace SemesterProjectManager.Data
 {
@@ -23,13 +22,6 @@ namespace SemesterProjectManager.Data
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-			//var foreignKeys = builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()).Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
-
-			//foreach (var relationship in foreignKeys)
-			//{
-			//	relationship.DeleteBehavior = DeleteBehavior.Restrict;
-			//}
-
 			base.OnModelCreating(builder);
 
 			builder.Entity<Subject>(entity =>
@@ -62,6 +54,11 @@ namespace SemesterProjectManager.Data
 					  .WithOne(t => t.Topic)
 					  .HasForeignKey(t => t.TopicId)
 					  .OnDelete(DeleteBehavior.Cascade);
+
+				entity.HasOne(t => t.Student)
+					  .WithOne(au => au.Topic)
+					  .HasForeignKey<ApplicationUser>(au => au.TopicId)
+					  .OnDelete(DeleteBehavior.Restrict);
 			});
 
 			builder.Entity<Task>(entity =>
@@ -70,10 +67,6 @@ namespace SemesterProjectManager.Data
 					  .WithOne(s => s.Task)
 					  .HasForeignKey<ApplicationUser>(s => s.TaskId)
 					  .OnDelete(DeleteBehavior.Restrict);
-
-				//entity.HasOne(t => t.Topic)
-				//	  .WithOne(tp => tp.Task)
-				//	  .HasForeignKey<Topic>(tp => tp.TaskId);
 			});
 
 			builder.Entity<Project>(entity =>

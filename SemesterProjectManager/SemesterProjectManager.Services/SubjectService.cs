@@ -72,10 +72,6 @@
 				Id = subject.Id,
 				Name = subject.Name,
 				TeacherId = subject.TeacherId,
-				//Topics = subject.Topics?.Select(t => new TopicViewModel()
-				//{
-				//	Name = t.Title,
-				//})
 			};
 
 			return model;
@@ -121,18 +117,6 @@
 
 			this.context.Subjects.Remove(subject);
 			this.context.SaveChanges();
-		}	
-
-		//public string Test(int id)
-		//{
-		//	var subject = this.GetById(id);
-
-		//	if (!subject.Result.Topics.Any())
-		//	{
-		//		return "Empty";
-		//	}
-
-		//	return "Ok";
-		//}
+		}
 	}
 }

@@ -8,6 +8,8 @@
 
 	public interface ITopicService
 	{
+		public IEnumerable<TopicViewModel> GetAll();
+
 		public ASYNC.Task<IEnumerable<TopicViewModel>> GetAllBySubjectId(int subjectId);
 
 		public ASYNC.Task<Topic> GetById(int id);

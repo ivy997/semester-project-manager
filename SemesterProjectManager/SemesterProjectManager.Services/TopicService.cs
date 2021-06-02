@@ -14,10 +14,25 @@
 	public class TopicService : ITopicService
 	{
 		private readonly ApplicationDbContext context;
+		private readonly ISubjectService subjectService;
 
-		public TopicService(ApplicationDbContext context)
+		public TopicService(ApplicationDbContext context, ISubjectService subjectService)
 		{
 			this.context = context;
+			this.subjectService = subjectService;
+		}
+
+		public IEnumerable<TopicViewModel> GetAll()
+		{
+			var topics = this.context.Topics.Select(x => new TopicViewModel
+			{
+				Id = x.Id,
+				Name = x.Title,
+				SubjectId = x.SubjectId,
+				SubjectName = this.subjectService.GetById(x.SubjectId).Result.Name,
+			});
+
+			return topics;
 		}
 
 		public void CreateAsync(CreateTopicInputModel input)

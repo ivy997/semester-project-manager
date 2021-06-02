@@ -1,7 +1,7 @@
 ﻿namespace SemesterProjectManager.Controllers
 {
 	using ASYNC = System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
+	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;
 	using SemesterProjectManager.Data;
@@ -12,10 +12,11 @@
 	using System.Collections.Generic;
 	using SemesterProjectManager.Web.ViewModels;
 	using Microsoft.AspNetCore.Authorization;
+	using System;
 
 	public class ProjectsController : Controller
 	{
-        private readonly UserManager<ApplicationUser> userManager;
+		private readonly UserManager<ApplicationUser> userManager;
 		private readonly ApplicationDbContext context;
 		private readonly ISubjectService subjectService;
 		private readonly IUserService userService;
@@ -27,17 +28,17 @@
 				ITopicService topicService,
 				IProjectService projectService,
 				ApplicationDbContext context,
-                UserManager<ApplicationUser> userManager)
+				UserManager<ApplicationUser> userManager)
 		{
 			this.subjectService = subjectService;
 			this.userService = userService;
 			this.topicService = topicService;
 			this.projectService = projectService;
 			this.context = context;
-            this.userManager = userManager;
+			this.userManager = userManager;
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async ASYNC.Task<ActionResult<IEnumerable<ProjectViewModel>>> All()
 		{
 			var projectsFromDb = await this.projectService.GetAll();
@@ -66,9 +67,9 @@
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Student")]
+		[Authorize(Roles = "Admin, Support, Student")]
 		public async ASYNC.Task<IActionResult> Upload(int id, IFormFile files)
-        {
+		{
 			var user = this.userManager.GetUserId(this.User);
 
 			try
@@ -76,17 +77,41 @@
 				if (files != null)
 				{
 					await this.projectService.Upload(id, user, files);
+					TempData["Success"] = "Project file has been uploaded successfully.";
 				}
-				TempData["Success"] = "Project file has been uploaded successfully.";
+				else
+				{
+					TempData["Fail"] = "Choose a file to upload.";
+				}
+
 				return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Topics", action = "Details", Id = id }));
 			}
 			catch (DbUpdateException)
 			{
 				return RedirectToAction("Details", "Topics", new { id = id });
 			}
+			catch (Exception)
+			{
+				TempData["Fail"] = "This file extension is not supported.";
+				return RedirectToAction("Details", "Topics", new { id = id });
+			}
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
+		public async ASYNC.Task<IActionResult> Download(int id)
+		{
+			FileContentResult result = await this.projectService.Download(id);
+
+			if (result == null)
+			{
+				TempData["Fail"] = "File not found.";
+				return RedirectToAction("All", "Projects");
+			}
+
+			return result;
+		}
+
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async ASYNC.Task<IActionResult> Edit(int id)
 		{
 			var project = await this.projectService.GetById(id);
@@ -113,7 +138,7 @@
 		}
 
 		[HttpPost, ActionName("Edit")]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> EditPost(ProjectViewModel model, int id)
 		{
@@ -125,7 +150,7 @@
 			return RedirectToAction(nameof(All));
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async ASYNC.Task<IActionResult> Delete(int id, bool? saveChangesError = false)
 		{
 			var project = await this.projectService.GetById(id);
@@ -159,7 +184,7 @@
 		}
 
 		[HttpPost, ActionName("Delete")]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> DeleteConfirmed(int id)
 		{

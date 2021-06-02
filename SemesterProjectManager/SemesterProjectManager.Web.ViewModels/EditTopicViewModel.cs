@@ -20,15 +20,21 @@
 		public string Description { get; set; }
 
 		[Required]
-		[Display(Name = "State of approval")]
+		[Display(Name = "Topic state")]
 		[EnumDataType(typeof(StateOfApproval))]
 		public StateOfApproval StateOfApproval { get; set; }
 
 		public int SubjectId { get; set; }
 
+		public string TeacherFullName { get; set; }
+
 		public IEnumerable<TaskViewModel> Tasks { get; set; }
 
+		public int TasksCount { get; set; } 
+
 		public ProjectViewModel Project { get; set; }
+
+		public int FacultyNumber { get; set; }
 
 		//public BufferedSingleFileUploadDbModel FileUpload { get; set; }
 

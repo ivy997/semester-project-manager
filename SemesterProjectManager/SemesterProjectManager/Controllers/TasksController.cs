@@ -12,26 +12,47 @@
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Routing;
 	using Microsoft.AspNetCore.Authorization;
+	using System.Collections.Generic;
 
 	public class TasksController : Controller
 	{
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<ApplicationUser> userManager;
+		private readonly ITopicService topicService;
 		private readonly ITaskService taskService;
 		private readonly IUserService userService;
 
 		public TasksController(ApplicationDbContext context,
 			UserManager<ApplicationUser> userManager,
+			ITopicService topicService,
 			ITaskService taskService,
 			IUserService userService)
 		{
 			this.context = context;
 			this.userManager = userManager;
+			this.topicService = topicService;
 			this.taskService = taskService;
 			this.userService = userService;
 		}
 
-		[Authorize(Roles = "Student")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
+		public ActionResult<IEnumerable<TaskViewModel>> All()
+		{
+			var tasks = this.taskService.GetAll().Select(x => new TaskViewModel()
+			{
+				Id = x.Id,
+				StudentFullName = $"{this.userService.GetUserById(x.StudentId).Result.FirstName} " +
+								  $"{this.userService.GetUserById(x.StudentId).Result.LastName}",
+				FacultyNumber = this.userService.GetUserById(x.StudentId).Result.FacultyNumber,
+				TopicName = this.topicService.GetById(x.TopicId).Result.Title,
+				CreatedOn = x.CreatedOn,
+				IsApproved = x.IsApproved,
+			});
+
+			return this.View("All", tasks);
+		}
+
+		[Authorize(Roles = "Admin, Support, Student")]
 		public async ASYNC.Task<IActionResult> Create(int id, int subjectId)
 		{
 			var user = await this.userManager.GetUserAsync(this.User);
@@ -64,7 +85,7 @@
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Student")]
+		[Authorize(Roles = "Admin, Support, Student")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> Create(CreateTaskViewModel model)
 		{
@@ -106,7 +127,7 @@
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> Edit(EditTaskViewModel model, int id)
 		{
@@ -136,7 +157,7 @@
 			}));
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async ASYNC.Task<IActionResult> Delete(int id)
 		{
 			var task = await this.taskService.GetById(id);
@@ -159,8 +180,8 @@
 			return this.View("Delete", taskToDelete);
 		}
 
-		[Authorize(Roles = "Teacher")]
 		[HttpPost, ActionName("Delete")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> DeleteConfirmed(int id, int topicId)
 		{

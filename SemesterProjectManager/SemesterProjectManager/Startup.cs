@@ -9,7 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SemesterProjectManager.Data;
+using SemesterProjectManager.Data.Data;
 using SemesterProjectManager.Data.Models;
+using SemesterProjectManager.Data.Models.Enums;
 using SemesterProjectManager.Services;
 using System;
 using System.Collections.Generic;
@@ -50,7 +52,7 @@ namespace SemesterProjectManager
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			if (env.IsDevelopment())
 			{
@@ -70,6 +72,8 @@ namespace SemesterProjectManager
 
 			app.UseAuthentication();
 			app.UseAuthorization();
+
+			DbSeed.SeedData(userManager, roleManager);
 
 			app.UseEndpoints(endpoints =>
 			{

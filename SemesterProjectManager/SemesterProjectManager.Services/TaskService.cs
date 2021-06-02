@@ -25,6 +25,21 @@
 			this.userService = userService;
 		}
 
+		public IEnumerable<TaskServiceModel> GetAll()
+		{
+			var tasks = this.context.Tasks
+				.Select(x => new TaskServiceModel()
+				{
+					Id = x.Id,
+					StudentId = x.StudentId,
+					TopicId = x.TopicId,
+					CreatedOn = x.CreatedOn,
+					IsApproved = x.IsApproved,
+				});
+
+			return tasks;
+		}
+
 		public async ASYNC.Task<IEnumerable<TaskServiceModel>> GetAllByTopicId(int topicId)
 		{
 			var tasks = this.context.Tasks
@@ -65,14 +80,23 @@
 				StudentId = taskModel.StudentId,
 			};
 
+			topic.Tasks.Add(task);
+
 			this.context.Add(task);
+			this.context.Topics.Update(topic);
+			this.context.SaveChanges();
+
+			student.TaskId = task.Id;
+
+			this.context.Users.Update(student);
 			this.context.SaveChanges();
 		}
 
 		public async ASYNC.Task Edit(EditTaskViewModel model, int id)
 		{
 			// Try to make it async
-			var taskToUpdate = await this.GetById(id);
+			Task taskToUpdate = await this.GetById(id);
+			Topic topicToUpdate = await this.topicService.GetById(model.TopicId);
 
 			// Fix error handling (but in controller)
 			// Think about asynchronously updating the database
@@ -82,15 +106,24 @@
 			taskToUpdate.DueDate = model.DueDate;
 			taskToUpdate.IsApproved = model.IsApproved;
 
+			if (model.IsApproved)
+			{
+				topicToUpdate.StudentId = model.StudentId;
+			}
+
 			this.context.Tasks.Update(taskToUpdate);
+			this.context.Topics.Update(topicToUpdate);
 			this.context.SaveChanges();
 		}
 
 		public async ASYNC.Task Delete(int id)
 		{
-			var task = await this.GetById(id);
+			Task task = await this.GetById(id);
+			Topic topicToUpdate = await this.topicService.GetById(task.TopicId);
+			topicToUpdate.StudentId = null;
 
 			this.context.Tasks.Remove(task);
+			this.context.Topics.Update(topicToUpdate);
 			this.context.SaveChanges();
 		}
 	}

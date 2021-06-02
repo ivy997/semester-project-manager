@@ -221,6 +221,9 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TopicId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -241,6 +244,10 @@ namespace SemesterProjectManager.Data.Migrations
                     b.HasIndex("TaskId")
                         .IsUnique()
                         .HasFilter("[TaskId] IS NOT NULL");
+
+                    b.HasIndex("TopicId")
+                        .IsUnique()
+                        .HasFilter("[TopicId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -291,6 +298,10 @@ namespace SemesterProjectManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -361,8 +372,15 @@ namespace SemesterProjectManager.Data.Migrations
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Requirements")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("StateOfTopic")
                         .HasColumnType("int");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
@@ -438,6 +456,11 @@ namespace SemesterProjectManager.Data.Migrations
                     b.HasOne("SemesterProjectManager.Data.Models.Task", "Task")
                         .WithOne("Student")
                         .HasForeignKey("SemesterProjectManager.Data.Models.ApplicationUser", "TaskId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SemesterProjectManager.Data.Models.Topic", "Topic")
+                        .WithOne("Student")
+                        .HasForeignKey("SemesterProjectManager.Data.Models.ApplicationUser", "TopicId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
