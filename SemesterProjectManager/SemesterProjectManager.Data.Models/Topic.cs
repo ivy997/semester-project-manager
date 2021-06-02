@@ -11,7 +11,6 @@
 		{
 			this.StateOfTopic = StateOfApproval.Available;
 			this.Tasks = new HashSet<Task>();
-			//this.ExpirationDate = DateTime.UtcNow.AddDays(7);
 		}
 
 		[Required]
@@ -20,15 +19,18 @@
 		[Required]
 		public string Description { get; set; }
 
+		[Required]
+		public string Requirements { get; set; }
+
 		public StateOfApproval StateOfTopic { get; set; }
 
 		public int SubjectId { get; set; }
 
 		public Subject Subject { get; set; }
 
-		//public int? TaskId { get; set; }
+		public string StudentId { get; set; }
 
-		//public Task Task { get; set; }
+		public ApplicationUser Student { get; set; }
 
 		public int? ProjectId { get; set; }
 

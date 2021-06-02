@@ -5,10 +5,13 @@
 	using Microsoft.AspNetCore.Http;
 	using SemesterProjectManager.Data.Models;
 	using SemesterProjectManager.Web.ViewModels;
+	using Microsoft.AspNetCore.Mvc;
 
 	public interface IProjectService
 	{
 		public ASYNC.Task Upload(int id, string studentId, IFormFile files);
+
+		public ASYNC.Task<FileContentResult> Download(int projectId);
 
 		public ASYNC.Task<Project> GetById(int id);
 

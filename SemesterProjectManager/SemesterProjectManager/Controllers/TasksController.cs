@@ -35,7 +35,7 @@
 			this.userService = userService;
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public ActionResult<IEnumerable<TaskViewModel>> All()
 		{
 			var tasks = this.taskService.GetAll().Select(x => new TaskViewModel()
@@ -48,12 +48,11 @@
 				CreatedOn = x.CreatedOn,
 				IsApproved = x.IsApproved,
 			});
-			//var tasksViewModels = new TaskViewModel
+
 			return this.View("All", tasks);
-			//return tasks;
 		}
 
-		[Authorize(Roles = "Student")]
+		[Authorize(Roles = "Admin, Support, Student")]
 		public async ASYNC.Task<IActionResult> Create(int id, int subjectId)
 		{
 			var user = await this.userManager.GetUserAsync(this.User);
@@ -86,7 +85,7 @@
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Student")]
+		[Authorize(Roles = "Admin, Support, Student")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> Create(CreateTaskViewModel model)
 		{
@@ -128,7 +127,7 @@
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> Edit(EditTaskViewModel model, int id)
 		{
@@ -158,7 +157,7 @@
 			}));
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async ASYNC.Task<IActionResult> Delete(int id)
 		{
 			var task = await this.taskService.GetById(id);
@@ -181,8 +180,8 @@
 			return this.View("Delete", taskToDelete);
 		}
 
-		[Authorize(Roles = "Teacher")]
 		[HttpPost, ActionName("Delete")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> DeleteConfirmed(int id, int topicId)
 		{

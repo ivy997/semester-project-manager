@@ -22,46 +22,46 @@
         </div> <!-- row -->
         <p>
             @*@if (User.IsInRole("Teacher"))
-            {
-                <div>
-                    <a class="main-btn" asp-action="Create">Create New</a>
-                </div>
-            }*@
+                {
+                    <div>
+                        <a class="main-btn" asp-action="Create">Create New</a>
+                    </div>
+                }*@
         </p>
     </div> <!-- container -->
 </section>
 
 <section id="teachers-page" class="pt-90 pb-120 gray-bg">
     <div class="container">
-        <div class="row">
-            <div class="col pl-20 pr-20">
+        <div>
+            <div class="pl-20 pr-20">
                 <ul>
                     @foreach (var item in Model)
                     {
                         <li>
-                            <div class="singel-reviews row">
-                                <div class="reviews-author col-md-7">
-                                    <div class="author-thum col-md-3">
+                            <div class="singel-publication singel-reviews row">
+                                <div class="reviews-author col-1 remove-padding-right">
+                                    <div class="author-thum mt-2">
                                         <img src="../../images/review/r-1.jpg" alt="Reviews">
                                     </div>
-                                    <div class="author-name col-md-5">
-                                        <h6>@Html.DisplayFor(modelItem => item.StudentFullName)</h6>
-                                        <span><i class="fa fa-calendar"></i> @Html.DisplayFor(modelItem => item.CreatedOn)</span>
-                                    </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="author-name col-5 mt-3 remove-padding-left">
+                                    <h6>@Html.DisplayFor(modelItem => item.StudentFullName)</h6>
+                                    <span><i class="fa fa-calendar"></i> @Html.DisplayFor(modelItem => item.CreatedOn)</span>
+                                </div>
+                                <div class="col-6">
                                     <div class="singel-publication">
-                                        <div class="cont">
+                                        <div class="cont ">
                                             <div>
                                                 @Html.DisplayFor(modelItem => item.IsApproved)
                                             </div>
-                                            <div class="col">
-                                                <div class="button text-right">
+                                            <div class="col-2">
+                                                <div class="button">
                                                     <a class="main-btn hover-success" style="width: 69px" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <div class="button text-left">
+                                            <div class="col-2">
+                                                <div class="button">
                                                     <a class="main-btn hover-danger" style="width: 69px;" asp-controller="Tasks" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                                 </div>
                                             </div>

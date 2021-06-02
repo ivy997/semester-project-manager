@@ -1,7 +1,9 @@
+@using Microsoft.AspNetCore.Identity
+@using SemesterProjectManager.Data.Models
 @{
     ViewData["Title"] = "Home Page";
 }
-
+@inject SignInManager<ApplicationUser> SignInManager
 
 <!--====== SEARCH BOX PART START ======-->
 
@@ -27,11 +29,14 @@
             <div class="row">
                 <div class="col-xl-7 col-lg-9">
                     <div class="slider-cont">
-                        <h1 data-animation="bounceInLeft" data-delay="1s">Choose the right theme for education</h1>
-                        <p data-animation="fadeInUp" data-delay="1.3s">Donec vitae sapien ut libearo venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt  Sed fringilla mauri amet nibh.</p>
+                        <h1 data-animation="bounceInLeft" data-delay="1s">Semester Project Manager</h1>
+                        <p data-animation="fadeInUp" data-delay="1.3s">Project submission has never been easier.</p>
                         <ul>
-                            <li><a data-animation="fadeInUp" data-delay="1.6s" class="main-btn" href="#">Read More</a></li>
-                            <li><a data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2" href="#">Get Started</a></li>
+                            <li><a data-animation="fadeInUp" data-delay="1.6s" class="main-btn" href="#">Contact us</a></li>
+                            @if (!SignInManager.IsSignedIn(this.User))
+                            {
+                                <li><a asp-area="Identity" asp-page="/Account/Login" data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2">Get Started</a></li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -44,11 +49,14 @@
             <div class="row">
                 <div class="col-xl-7 col-lg-9">
                     <div class="slider-cont">
-                        <h1 data-animation="bounceInLeft" data-delay="1s">Choose the right theme for education</h1>
-                        <p data-animation="fadeInUp" data-delay="1.3s">Donec vitae sapien ut libearo venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt  Sed fringilla mauri amet nibh.</p>
+                        <h1 data-animation="bounceInLeft" data-delay="1s">Semester Project Manager</h1>
+                        <p data-animation="fadeInUp" data-delay="1.3s">Project submission has never been easier.</p>
                         <ul>
-                            <li><a data-animation="fadeInUp" data-delay="1.6s" class="main-btn" href="#">Read More</a></li>
-                            <li><a data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2" href="#">Get Started</a></li>
+                            <li><a data-animation="fadeInUp" data-delay="1.6s" class="main-btn" href="#">Contact us</a></li>
+                            @if (!SignInManager.IsSignedIn(this.User))
+                            {
+                                <li><a asp-area="Identity" asp-page="/Account/Login" data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2">Get Started</a></li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -61,11 +69,14 @@
             <div class="row">
                 <div class="col-xl-7 col-lg-9">
                     <div class="slider-cont">
-                        <h1 data-animation="bounceInLeft" data-delay="1s">Choose the right theme for education</h1>
-                        <p data-animation="fadeInUp" data-delay="1.3s">Donec vitae sapien ut libearo venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt  Sed fringilla mauri amet nibh.</p>
+                        <h1 data-animation="bounceInLeft" data-delay="1s">Semester Project Manager</h1>
+                        <p data-animation="fadeInUp" data-delay="1.3s">Project submission has never been easier.</p>
                         <ul>
-                            <li><a data-animation="fadeInUp" data-delay="1.6s" class="main-btn" href="#">Read More</a></li>
-                            <li><a data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2" href="#">Get Started</a></li>
+                            <li><a data-animation="fadeInUp" data-delay="1.6s" class="main-btn" href="#">Contact us</a></li>
+                            @if (!SignInManager.IsSignedIn(this.User))
+                            {
+                                <li><a asp-area="Identity" asp-page="/Account/Login" data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2">Get Started</a></li>
+                            }
                         </ul>
                     </div>
                 </div>

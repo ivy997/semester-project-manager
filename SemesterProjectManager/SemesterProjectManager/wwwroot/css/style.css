@@ -51,16 +51,6 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Roboto:300,400,500,700');
 
-/*Upload file*/
-
-.file-field.big .file-path-wrapper {
-    height: 3.2rem;
-}
-
-    .file-field.big .file-path-wrapper .file-path {
-        height: 3rem;
-    }
-
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -193,7 +183,7 @@ p {
 }
 
 .hover-danger:hover {
-    color: #4C071F;
+    color: black;
     border-color: #FF0101;
     background-color: #FF0101;
 }
@@ -4597,3 +4587,11 @@ p.form-message.error {
     .contact-address .contact-heading h5 {
         padding-bottom: 15px;
     }
+
+remove-padding-left {
+    padding-left: 0 !important;
+}
+
+remove-padding-right {
+    padding-right: 0 !important;
+}

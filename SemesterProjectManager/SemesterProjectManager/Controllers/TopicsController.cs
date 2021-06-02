@@ -42,15 +42,15 @@
 			this.subjectService = subjectService;
 		}
 
-		[Authorize]
-		public ActionResult<IEnumerable<SubjectViewModel>> All()
+		[Authorize(Roles = "Admin, Support, Teacher, Student")]
+		public ActionResult<IEnumerable<TopicViewModel>> All()
 		{
 			var topics = this.topicService.GetAll();
 
 			return this.View("All", topics);
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public IActionResult Create(int subjectId)
 		{
 			var topicModel = new CreateTopicInputModel();
@@ -59,7 +59,7 @@
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public IActionResult Create(CreateTopicInputModel model)
 		{
 			if (ModelState.IsValid)
@@ -75,7 +75,7 @@
 			}));
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async Task<IActionResult> Edit(int id)
 		{
 			var topic = await this.topicService.GetById(id);
@@ -98,7 +98,7 @@
 		}
 
 		[HttpPost, ActionName("Edit")]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public IActionResult EditPost(EditTopicViewModel input, int id)
 		{
@@ -112,7 +112,7 @@
 			}));
 		}
 
-		[Authorize(Roles = "Teacher, Student")]
+		[Authorize(Roles = "Admin, Support, Teacher, Student")]
 		public async Task<ActionResult<string>> Details(int id)
 		{
 			var topic = await this.topicService.GetById(id);
@@ -154,7 +154,11 @@
 					.ToList();
 			}
 
-			if (project != null && project.TopicId == topic.Id)
+			if (topic.StudentId != null && topic.StudentId != user.Id)
+			{
+				topic.StateOfTopic = StateOfApproval.Unavailable;
+			}
+			else if (project != null && project.TopicId == topic.Id)
 			{
 				topic.StateOfTopic = StateOfApproval.Submitted;
 			}
@@ -179,6 +183,7 @@
 				StateOfApproval = topic.StateOfTopic,
 				SubjectId = topic.SubjectId,
 				Tasks = tasksForView,
+				TasksCount = tasksForView.Count,
 				FacultyNumber = user.FacultyNumber,
 				TeacherFullName = $"{teacher.Title} {teacher.FirstName} {teacher.LastName}",
 			};
@@ -186,7 +191,7 @@
 			return View(topicViewModel);
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async Task<IActionResult> Delete(int id, bool? saveChangesError = false)
 		{
 			var topic = await this.topicService.GetById(id);
@@ -216,7 +221,7 @@
 		}
 
 		[HttpPost, ActionName("Delete")]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id, int subjectId)
 		{

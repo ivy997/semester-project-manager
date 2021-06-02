@@ -1,7 +1,6 @@
 ﻿namespace SemesterProjectManager.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Routing;
 	using Microsoft.EntityFrameworkCore;
 	using SemesterProjectManager.Data;
 	using SemesterProjectManager.Services;
@@ -29,7 +28,7 @@
 			this.context = context;
 		}
 
-		[Authorize]
+		[Authorize(Roles = "Admin, Support, Teacher, Student")]
 		public ActionResult<IEnumerable<SubjectViewModel>> All()
 		{
 			// Find a better way to get teacher's full name
@@ -46,7 +45,7 @@
 			return this.View("All", subjects);
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async Task<IActionResult> Create()
 		{
 			var teachersModel = await this.userService.GetTeachersFullNameWithId();
@@ -54,7 +53,7 @@
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public IActionResult Create(CreateSubjectInputModel model)
 		{
 			if (ModelState.IsValid)
@@ -65,6 +64,7 @@
 			return this.Redirect("/Subjects/All");
 		}
 
+		[Authorize(Roles = "Admin, Support, Teacher, Student")]
 		public async Task<ActionResult<string>> Details(int id)
 		{
 			var subjectModel = await this.subjectService.Details(id);
@@ -87,7 +87,7 @@
 			return View(subjectViewModel);
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async Task<IActionResult> Edit(int id)
 		{
 			var subject = await this.subjectService.GetById(id);
@@ -109,22 +109,16 @@
 		}
 
 		[HttpPost, ActionName("Edit")]
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		[ValidateAntiForgeryToken]
 		public IActionResult EditPost(CreateSubjectInputModel input, int id)
 		{
 			this.subjectService.Edit(input, id);
 
-			//return RedirectToAction("Details", new RouteValueDictionary(new
-			//{
-			//	controller = "Subjects",
-			//	action = "Details",
-			//	Id = id,
-			//}));
 			return RedirectToAction(nameof(All));
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async Task<IActionResult> Delete(int id, bool? saveChangesError = false)
 		{
 			var subject = await this.subjectService.Delete(id);

@@ -45,7 +45,7 @@
                             @*<label asp-for="Input.AccountType"></label>*@
                             <select class="form-control" asp-for="Input.AccountType" asp-items="Html.GetEnumSelectList<AccountType>()">
                                 <option>
-                                    Select
+                                    Select Role
                                 </option>
                             </select>
                             @Html.ValidationMessageFor(model => model.Input.AccountType)
@@ -67,10 +67,10 @@
                     if ((Model.ExternalLogins?.Count ?? 0) == 0)
                     {
                         <div>
-                            <p>
+                            @*<p>
                                 There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
                                 for details on setting up this ASP.NET application to support logging in via external services.
-                            </p>
+                            </p>*@
                         </div>
                     }
                     else

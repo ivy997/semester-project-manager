@@ -12,6 +12,7 @@
 		[Display(Name = "In progress")]
 		InProgress = 5,
 		Submitted = 6,
-		Expired = 7
+		Expired = 7,
+		Unavailable = 8
 	}
 }

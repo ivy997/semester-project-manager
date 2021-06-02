@@ -41,22 +41,6 @@
 			return teachers;
 		}
 
-		//public async Task<IEnumerable<string>> GetTeachersFullName()
-		//{
-		//	var teachers = await this.GetTeachers();
-		//	var teachersFullNames = new List<string>();
-		//	string fullName = string.Empty;
-
-		//	foreach (var teacher in teachers.ToList())
-		//	{
-		//		fullName = teacher.Title + " " + teacher.FirstName + " " + teacher.LastName;
-		//		teachersFullNames.Add(fullName);
-		//		fullName = string.Empty;
-		//	}
-
-		//	return teachersFullNames;
-		//}
-
 		public async Task<CreateSubjectInputModel> GetTeachersFullNameWithId()
 		{
 			var teachers = await this.GetTeachers();

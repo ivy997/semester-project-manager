@@ -8,6 +8,9 @@
 		[Required]
 		public string Name { get; set; }
 
+		[Required]
+		public string Description { get; set; }
+
 		public string TeacherId { get; set; }
 
 		public ApplicationUser Teacher { get; set; }

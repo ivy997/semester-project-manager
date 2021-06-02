@@ -1,28 +1,30 @@
 ﻿namespace SemesterProjectManager.Services
 {
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Identity;
-	using Microsoft.EntityFrameworkCore;
-	using SemesterProjectManager.Data;
-	using SemesterProjectManager.Data.Models;
-	using SemesterProjectManager.Data.Models.Enums;
-	using SemesterProjectManager.Web.ViewModels;
-	using SendGrid;
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using ASYNC = System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using SemesterProjectManager.Data;
+    using SemesterProjectManager.Data.Models;
+    using SemesterProjectManager.Web.ViewModels;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using ASYNC = System.Threading.Tasks;
 
-	public class ProjectService : IProjectService
+    public class ProjectService : IProjectService
 	{
 		private readonly ApplicationDbContext context;
-		private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUserService userService;
+        private readonly ITopicService topicService;
 
-		public ProjectService(ApplicationDbContext context,
-            UserManager<ApplicationUser> userManager)
+        public ProjectService(ApplicationDbContext context,
+            IUserService userService,
+            ITopicService topicService)
 		{
 			this.context = context;
-            this.userManager = userManager;
+            this.userService = userService;
+            this.topicService = topicService;
 		}
 
         public async ASYNC.Task<Project> GetById(int id)
@@ -55,12 +57,13 @@
             if (files.Length > 0)
             {
                 var file = Path.GetFileName(files.FileName).Split('.');
-                // Getting FileName
                 var fileName = file[0];
-                // Getting file Extension
                 var fileExtension = file[1];
-                // concatenating  FileName + FileExtension
-                var newFileName = String.Concat(fileName, ".", fileExtension);
+
+                if (!GetMimeTypes().ContainsKey(fileExtension))
+				{
+                    throw new Exception("Missing file extention");
+                }
 
                 var project = new Project()
                 {
@@ -79,6 +82,27 @@
                 this.context.Projects.Add(project);
                 this.context.SaveChanges();
             }
+        }
+
+        public async ASYNC.Task<FileContentResult> Download(int projectId)
+		{
+            Project project = await this.GetById(projectId);
+            ApplicationUser student = await this.userService.GetUserById(project.StudentId);
+            Topic topic = await this.topicService.GetById(project.TopicId);
+
+            if (project.ProjectFile != null)
+			{
+                byte[] file = project.ProjectFile;
+                string mimeType = GetMimeTypes()[project.FileType];
+                var result = new FileContentResult(file, mimeType);
+                result.FileDownloadName = $"{topic.Title} - " +
+									   $"{student.FirstName}_{student.LastName}_{student.FacultyNumber} - " +
+                                       $"{project.CreatedOn}.{project.FileType}";
+
+                return result;
+            }
+
+            return null;
         }
 
         public async ASYNC.Task Edit(ProjectViewModel model, int id)
@@ -100,6 +124,17 @@
 
             this.context.Projects.Remove(project);
             this.context.SaveChanges();
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {"pdf", "application/pdf"},
+                {"doc", "application/vnd.ms-word"},
+                {"docx", "application/vnd.ms-word"},
+                {"zip", "application/zip"}
+            };
         }
     }
 }

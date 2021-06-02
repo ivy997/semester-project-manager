@@ -65,9 +65,9 @@
                                         <a class="active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a id="instructor-tab" data-toggle="tab" href="#instructor" role="tab" aria-controls="instructor" aria-selected="false">Instructor</a>
+                                        <a id="instructor-tab" data-toggle="tab" href="#instructor" role="tab" aria-controls="instructor" aria-selected="false">Teacher</a>
                                     </li>
-                                    @if(this.User.IsInRole("Teacher"))
+                                    @if(!this.User.IsInRole("Student"))
                                      { 
                                          <li class="nav-item">
                                              <a id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Tasks</a>
@@ -80,11 +80,11 @@
                                         <div class="overview-description">
                                             <div class="singel-description pt-40">
                                                 <h6>Topic Summary</h6>
-                                                <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
+                                                <p>@Html.DisplayFor(Model => Model.Description)</p>
                                             </div>
                                             <div class="singel-description pt-40">
                                                 <h6>Requrements</h6>
-                                                <p>@Html.DisplayFor(Model => Model.Description)</p>
+                                                <p></p>
                                                 @*<p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>*@
                                             </div>
                                         </div> <!-- overview description -->
@@ -121,7 +121,7 @@
                                             </div>*@
                                             <ul>
 
-                                                @if (this.User.IsInRole("Teacher"))
+                                                @if (!this.User.IsInRole("Student"))
                                                 {
                                                     @if (Model.Tasks != null)
                                                     {
@@ -131,7 +131,7 @@
                                                                 <div class="singel-reviews row">
                                                                     <div class="reviews-author col-md-7">
                                                                         <div class="author-thum">
-                                                                            <img src="../../images/review/r-1.jpg" alt="Reviews">
+                                                                            <img src="../../images/review/r-1-1.png" alt="Reviews">
                                                                         </div>
                                                                         <div class="author-name">
                                                                             <h6>@Html.DisplayFor(modelItem => item.StudentFullName)</h6>
@@ -177,9 +177,12 @@
                                 <div class="course-features mt-30">
                                     <h4>Topic details</h4>
                                     <ul>
-                                        <li><i class="fa fa-user-o"></i>@Html.DisplayNameFor(model => model.Tasks):<span>@Html.DisplayFor(model => model.Tasks)</span></li>
+                                        @if (!this.User.IsInRole("Student"))
+			                             {
+                                             <li><i class="fa fa-user-o"></i>@Html.DisplayNameFor(model => model.Tasks):<span>@Html.DisplayFor(model => model.TasksCount)</span></li>
+			                             }
                                         <li><i class="fa fa-clock-o"></i>Deadline : <span>20/05/2020</span></li>
-                                        @if (this.User.IsInRole("Student"))
+                                        @if (!this.User.IsInRole("Teacher"))
                                         {
                                             <li>
                                                 <i class="fa fa-check-circle"></i>
@@ -189,31 +192,36 @@
                                         }
                                     </ul>
                                     <div>
-                                        @if (this.User.IsInRole("Student") && Model.Tasks.All(x => x.IsApproved == false))
+                                        @if (!this.User.IsInRole("Teacher"))
                                         {
-                                            <div class="price-button pt-10">
-                                                <a class="main-btn" asp-controller="Tasks" asp-action="Create" asp-route-id="@Model.Id" asp-route-subjectId="@Model.SubjectId">Create Task</a>
-                                            </div>
+                                            @if ((this.User.IsInRole("Admin") || this.User.IsInRole("Support")) || (!Model.Tasks.Any() && Model.StateOfApproval != SemesterProjectManager.Data.Models.Enums.StateOfApproval.Unavailable))
+                                            {
+                                                 <div class="price-button pt-10">
+                                                     <a class="main-btn" asp-controller="Tasks" asp-action="Create" asp-route-id="@Model.Id" asp-route-subjectId="@Model.SubjectId">Create Task</a>
+                                                  </div>
+
+                                            }
                                         }
-                                        @if (this.User.IsInRole("Student") && Model.Tasks.Any(x => x.IsApproved == true))
-                                         {
-                                             <div class="">
-                                                 <form method="post" enctype="multipart/form-data" asp-controller="Projects" asp-action="Upload" asp-route-id="@Model.Id">
-                                                     @Html.HiddenFor(m => m.Project.TopicId)
-                                                     <div class="form-group">
-                                                         <div class="pt-10">
-                                                             <h6 class="pb-10">Upload project file</h6>
-                                                             <input class="form-control" name="files" type="file" />
-                                                         </div>
-                                                     </div>
-                                                     <div class="form-group">
-                                                         <div class="pt-20">
-                                                             <input class="main-btn" type="submit" value="Upload" />
-                                                         </div>
-                                                     </div>
-                                                 </form>
-                                             </div>
-                                         }
+                                        @if (!this.User.IsInRole("Teacher"))
+                                        {
+                                            @if (this.User.IsInRole("Admin") || this.User.IsInRole("Support") || Model.Tasks.Any(x => x.IsApproved == true))
+                                            {
+                                                <form method="post" enctype="multipart/form-data" asp-controller="Projects" asp-action="Upload" asp-route-id="@Model.Id">
+                                                    @Html.HiddenFor(m => m.Project.TopicId)
+                                                    <div class="form-group">
+                                                        <div class="pt-10">
+                                                            <h6 class="pb-10">Upload project file</h6>
+                                                            <input class="form-control" name="files" type="file" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="pt-20">
+                                                            <input class="main-btn" type="submit" value="Upload" />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            }
+                                        }
                                     </div>
                                     @if (TempData["Success"] != null)
                                      {
@@ -231,10 +239,6 @@
                                              </div>
                                          </div>      
                                      }
-                                    @*<div class="price-button pt-10">
-            <span>Price : <b>$25</b></span>
-            <a href="#" class="main-btn">Enroll Now</a>
-        </div>*@
                                 </div> <!-- course features -->
                             </div>
                         </div>

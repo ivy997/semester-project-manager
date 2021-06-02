@@ -21,7 +21,7 @@
             </div>
         </div> <!-- row -->
         <p>
-            @if (User.IsInRole("Teacher"))
+            @if (!User.IsInRole("Student"))
              {
                 <div>
                     <a class="main-btn" asp-action="Create">Create New</a>
@@ -39,7 +39,7 @@
                      <div class="col-lg-3 col-md-6 col-sm-8">
                          <div class="singel-teachers mt-30 text-center">
                              <div class="image">
-                                 <img src="../images/teachers/t-1.jpg" alt="Teachers">
+                                 <img src="../images/subject/s-1.png" alt="Teachers">
                              </div>
                              <div class="cont">
                                  <a asp-action="Details" asp-route-id="@item.Id"><h6>@Html.DisplayFor(modelItem => item.Name)</h6></a>
@@ -47,7 +47,7 @@
                                  @*<span>@Html.DisplayFor(modelItem => item.FacultyNumber)</span>*@
                              </div>
                          </div>
-                         @if (User.IsInRole("Teacher"))
+                         @if (!User.IsInRole("Student"))
                           {
                               <div class="singel-publication">
                                   <div class="cont">
