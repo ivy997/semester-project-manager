@@ -37,7 +37,8 @@
                     <div class="col-lg-8">
                         <div class="corses-singel-left mt-30">
                             <div class="title">
-                                <h3>@Model.Title</h3>
+                                <h4 class="topic-details-title">@Model.Title</h4>
+                                <span class="topic-details-subject-title">@Model.SubjectName</span>
                             </div> <!-- title -->
                             <div class="course-terms">
                                 <ul>
@@ -127,11 +128,15 @@
                                                     {
                                                         foreach (var item in Model.Tasks)
                                                         {
+                                                            {
+                                                                var items = item.StudentFullName.Split(" ");
+                                                                var initials = $"{items[0][0]}{items[1][0]}";
+
                                                             <li>
                                                                 <div class="singel-reviews row">
                                                                     <div class="reviews-author col-md-7">
-                                                                        <div class="author-thum">
-                                                                            <img src="../../images/review/r-1-1.png" alt="Reviews">
+                                                                        <div id="profileImage">
+                                                                            <span>@initials</span>
                                                                         </div>
                                                                         <div class="author-name">
                                                                             <h6>@Html.DisplayFor(modelItem => item.StudentFullName)</h6>
@@ -159,6 +164,7 @@
                                                                     </div>
                                                                 </div> <!-- singel reviews -->
                                                             </li>
+                                                            }
                                                         }
                                                     }
                                                 }
