@@ -12,27 +12,32 @@
         @Html.HiddenFor(m => m.SubjectId)
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
-                    @*<label asp-for="Title" class="control-label"></label>*@
                     <input asp-for="Title" class="form-control" placeholder="Title" />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
-                    @*<label asp-for="Description" class="control-label"></label>*@
-                    <input asp-for="Description" class="form-control" placeholder="Description" />
+                    <textarea asp-for="Description" rows="5" class="form-control" placeholder="Description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
-                    @*<label asp-for="StateOfApproval"></label>*@
+                    <textarea asp-for="Requirements" rows="5" class="form-control" placeholder="Requirements"></textarea>
+                    <span asp-validation-for="Requirements" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
                     <select class="form-control" asp-for="StateOfApproval"
                             asp-items="@Html.GetEnumSelectList(typeof(SemesterProjectManager.Data.Models.Enums.StateOfApproval))">
                         <option>

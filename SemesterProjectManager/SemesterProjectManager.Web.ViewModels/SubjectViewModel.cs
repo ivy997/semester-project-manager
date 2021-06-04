@@ -1,10 +1,5 @@
 ﻿namespace SemesterProjectManager.Web.ViewModels
 {
-	using System;
-	using System.Text;
-	using System.Collections.Generic;
-
-	using SemesterProjectManager.Data.Models;
 	using System.ComponentModel.DataAnnotations;
 
 	public class SubjectViewModel
@@ -14,17 +9,10 @@
 		[Display(Name = "Subject")]
 		public string Name { get; set; }
 
+		[Display(Name = "Subject Summary")]
+		public string Description { get; set; }
+
 		[Display(Name = "Teacher")]
 		public string TeacherFullName { get; set; }
-		//{
-		//	get
-		//	{
-		//		return $"{this.Teacher.Title} {this.Teacher.FirstName} {this.Teacher.LastName}";
-		//	}
-		//	set
-		//	{
-		//		teacherFullName = value;
-		//	}
-		//}
 	}
 }

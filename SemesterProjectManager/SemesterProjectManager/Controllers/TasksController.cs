@@ -18,18 +18,21 @@
 	{
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<ApplicationUser> userManager;
+		private readonly ISubjectService subjectService;
 		private readonly ITopicService topicService;
 		private readonly ITaskService taskService;
 		private readonly IUserService userService;
 
 		public TasksController(ApplicationDbContext context,
 			UserManager<ApplicationUser> userManager,
+			ISubjectService subjectService,
 			ITopicService topicService,
 			ITaskService taskService,
 			IUserService userService)
 		{
 			this.context = context;
 			this.userManager = userManager;
+			this.subjectService = subjectService;
 			this.topicService = topicService;
 			this.taskService = taskService;
 			this.userService = userService;
@@ -45,6 +48,7 @@
 								  $"{this.userService.GetUserById(x.StudentId).Result.LastName}",
 				FacultyNumber = this.userService.GetUserById(x.StudentId).Result.FacultyNumber,
 				TopicName = this.topicService.GetById(x.TopicId).Result.Title,
+				SubjectName = this.subjectService.GetById(this.topicService.GetById(x.TopicId).Result.SubjectId).Result.Name,
 				CreatedOn = x.CreatedOn,
 				IsApproved = x.IsApproved,
 			});

@@ -28,82 +28,167 @@
 <!-------------------------------------------------------------------------------------------------------------------------------------->
 
 
-<section id="corses-singel" class="pb-20 gray-bg">
+<section id="teachers-singel" class="pt-70 pb-120 gray-bg">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="corses-singel-left mt-30">
-                    <div class="title">
-                        <h3>@Html.DisplayFor(model => model.Name)</h3>
-                    </div> <!-- title -->
-                    <div class="course-terms">
-                        <ul>
-                            <li>
-                                <div class="teacher-name">
-                                    <div class="thum">
-                                        <img src="../../images/course/teacher/t-1.jpg" alt="Teacher">
-                                    </div>
-                                    <div class="name">
-                                        <span>Teacher</span>
-                                        <h6>@Html.DisplayFor(model => model.TeacherFullName)</h6>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div> <!-- course terms -->
-
-                    <div class="corses-singel-image pt-50">
-                        <img src="../../images/course/cu-1.jpg" alt="Courses">
-                    </div> <!-- corses singel image -->
-
-                    <div class="corses-tab mt-30">
-                        <ul class="nav nav-justified" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
-                            </li>
-                            <li class="nav-item">
-                                <a id="instructor-tab" data-toggle="tab" href="#instructor" role="tab" aria-controls="instructor" aria-selected="false">Instructor</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                                <div class="overview-description">
-                                    <div class="singel-description pt-40">
-                                        <h6>Subject Summery</h6>
-                                        <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
-                                    </div>
-                                </div> <!-- overview description -->
-                            </div>
-                            <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
-                                <div class="instructor-cont">
-                                    <div class="instructor-author">
-                                        <div class="author-thum">
-                                            <img src="../../images/instructor/i-1.jpg" alt="Instructor">
-                                        </div>
-                                        <div class="author-name">
-                                            <a href="#"><h5>@Html.DisplayFor(model => model.TeacherFullName)</h5></a>
-                                            @*<span>Senior WordPress Developer</span>*@
-                                            <ul class="social">
-                                                <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    @*<div class="instructor-description pt-25">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus fuga ratione molestiae unde provident quibusdam sunt, doloremque. Error omnis mollitia, ex dolor sequi. Et, quibusdam excepturi. Animi assumenda, consequuntur dolorum odio sit inventore aliquid, optio fugiat alias. Veritatis minima, dicta quam repudiandae repellat non sit, distinctio, impedit, expedita tempora numquam?</p>
-                                    </div>*@
-                                </div> <!-- instructor cont -->
-                            </div>
-                        </div> <!-- tab content -->
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-8">
+                <div class="teachers-left mt-50">
+                    <div class="hero">
+                        <img src="../../../images/teachers/t-1.jpg" alt="Teachers">
                     </div>
-                </div> <!-- corses singel left -->
+                    <div class="corses-singel-left remove-padding">
+                        <div class="course-terms">
+                            <ul>
+                                <li>
+                                    <div class="teacher-name">
+                                        <div class="thum subject-singel-teacher-img-margin">
+                                            <img src="../../images/course/teacher/t-1.jpg" alt="Teacher">
+                                        </div>
+                                        <div class="name">
+                                            <span>@Html.DisplayNameFor(model => model.TeacherFullName)</span>
+                                            <h6>@Html.DisplayFor(model => model.TeacherFullName)</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    @*<div class="name">
+                        <h6>Mark alen</h6>
+                        <span>Vice chencelor</span>
+                    </div>*@
+                    <div class="social">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <p>Gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate..</p>
+                    </div>
+                </div> <!-- teachers left -->
+            </div>
+            <div class="col-lg-8">
+                <div class="teachers-right mt-50">
+                    <ul class="nav nav-justified" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="courses-tab" data-toggle="tab" href="#courses" role="tab" aria-controls="courses" aria-selected="false">Courses</a>
+                        </li>
+                    </ul> <!-- nav -->
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                            <div class="dashboard-cont">
+                                <div class="singel-dashboard pt-40">
+                                    <h5>About</h5>
+                                    <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
+                                </div> <!-- singel dashboard -->
+                                <div class="singel-dashboard pt-40">
+                                    <h5>Acchivments</h5>
+                                    <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
+                                </div> <!-- singel dashboard -->
+                                <div class="singel-dashboard pt-40">
+                                    <h5>My Objective</h5>
+                                    <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
+                                </div> <!-- singel dashboard -->
+                            </div> <!-- dashboard cont -->
+                        </div>
+                        <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+                            <div class="courses-cont pt-20">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="singel-course mt-30">
+                                            <div class="thum">
+                                                <div class="image">
+                                                    <img src="../../../images/course/cu-2.jpg" alt="Course">
+                                                </div>
+                                                <div class="price">
+                                                    <span>$10</span>
+                                                </div>
+                                            </div>
+                                            <div class="cont border">
+                                                <ul>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                                <span>(20 Reviws)</span>
+                                                <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
+                                                <div class="course-teacher">
+                                                    <div class="thum">
+                                                        <a href="#"><img src="../../../images/course/teacher/t-2.jpg" alt="teacher"></a>
+                                                    </div>
+                                                    <div class="name">
+                                                        <a href="#"><h6>Mark anthem</h6></a>
+                                                    </div>
+                                                    <div class="admin">
+                                                        <ul>
+                                                            <li><a href="#"><i class="fa fa-user"></i><span>31</span></a></li>
+                                                            <li><a href="#"><i class="fa fa-heart"></i><span>10</span></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- singel course -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="singel-course mt-30">
+                                            <div class="thum">
+                                                <div class="image">
+                                                    <img src="../../../images/course/cu-3.jpg" alt="Course">
+                                                </div>
+                                                <div class="price">
+                                                    <span>$30</span>
+                                                </div>
+                                            </div>
+                                            <div class="cont border">
+                                                <ul>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                                <span>(20 Reviws)</span>
+                                                <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
+                                                <div class="course-teacher">
+                                                    <div class="thum">
+                                                        <a href="#"><img src="../../../images/course/teacher/t-2.jpg" alt="teacher"></a>
+                                                    </div>
+                                                    <div class="name">
+                                                        <a href="#"><h6>Mark anthem</h6></a>
+                                                    </div>
+                                                    <div class="admin">
+                                                        <ul>
+                                                            <li><a href="#"><i class="fa fa-user"></i><span>31</span></a></li>
+                                                            <li><a href="#"><i class="fa fa-heart"></i><span>10</span></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- singel course -->
+                                    </div>
+                                </div> <!-- row -->
+                            </div> <!-- courses cont -->
+                        </div>
+                        
+                    </div> <!-- tab content -->
+                </div> <!-- teachers right -->
             </div>
         </div> <!-- row -->
     </div> <!-- container -->
 </section>
+
+
+<!-------------------------------------------------------------------------------------------------------------------------------------->
+
+
 
 
 <!-------------------------------------------------------------------------------------------------------------------------------------->
@@ -163,11 +248,6 @@
         </section>
 
         <div>
-            @*@if (User.IsInRole("Teacher"))
-                {
-                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-                }*@
             <a class="pt-10" asp-action="All">Back to List</a>
         </div>
     </div>

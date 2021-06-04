@@ -16,6 +16,9 @@
 		[Display(Name = "Topic")]
 		public string TopicName { get; set; }
 
+		[Display(Name = "Subject")]
+		public string SubjectName { get; set; }
+
 		[Display(Name = "Created on")]
 		public DateTime CreatedOn { get; set; }
 

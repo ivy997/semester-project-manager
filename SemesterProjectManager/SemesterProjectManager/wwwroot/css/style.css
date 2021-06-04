@@ -4588,10 +4588,48 @@ p.form-message.error {
         padding-bottom: 15px;
     }
 
-remove-padding-left {
+.remove-padding-left {
     padding-left: 0 !important;
 }
 
-remove-padding-right {
+.remove-padding-right {
     padding-right: 0 !important;
+}
+
+.remove-padding {
+    padding: 0 !important;
+}
+
+.subject-singel-teacher-img-margin {
+    margin-top: 13px;
+}
+
+#profileImage {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #07294d;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    line-height: 55px;
+    /*margin-right: 16px;*/
+}
+
+.task-list-margin {
+    margin-left: 70px;
+}
+
+.topic-details-title {
+    font-size: 30px;
+    color: #07294d;
+}
+
+.topic-details-subject-title {
+    color: #8a8a8a;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    padding-top: 5px;
+    padding-bottom: 25px;
 }
