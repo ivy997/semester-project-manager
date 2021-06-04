@@ -14,19 +14,16 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @Html.HiddenFor(m => m.SubjectId)
                 <div class="form-group">
-                    @*<label asp-for="Title" class="control-label"></label>*@
                     <input asp-for="Title" class="form-control" placeholder="Title" />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    @*<label asp-for="Description" class="control-label"></label>*@
                     <textarea rows="5" asp-for="Description" class="form-control" placeholder="Description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    @*<label asp-for="Description" class="control-label"></label>*@
-                    <textarea rows="4" class="form-control" placeholder="Requirements"></textarea>
-                    <span class="text-danger"></span>
+                    <textarea rows="4" asp-for="Requirements" class="form-control" placeholder="Requirements"></textarea>
+                    <span asp-validation-for="Requirements" class="text-danger"></span>
                 </div>
                 <div class="form-group pb-10">
                     <input type="submit" value="Create" class="main-btn" />

@@ -182,6 +182,7 @@
 				Description = topic.Description,
 				StateOfApproval = topic.StateOfTopic,
 				SubjectId = topic.SubjectId,
+				SubjectName = subject.Name,
 				Tasks = tasksForView,
 				TasksCount = tasksForView.Count,
 				FacultyNumber = user.FacultyNumber,

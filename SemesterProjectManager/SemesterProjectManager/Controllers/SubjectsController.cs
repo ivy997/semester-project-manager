@@ -80,6 +80,7 @@
 			{
 				Id = subjectModel.Id,
 				Name = subjectModel.Name,
+				Description = subjectModel.Description,
 				TeacherFullName = $"{teacher.Title} {teacher.FirstName} {teacher.LastName}",
 				Topics = await this.topicService.GetAllBySubjectId(subjectModel.Id),
 			};

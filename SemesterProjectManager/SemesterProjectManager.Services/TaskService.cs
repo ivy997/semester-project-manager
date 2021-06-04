@@ -1,14 +1,12 @@
 ﻿namespace SemesterProjectManager.Services
 {
-	using System.Linq;
-	using System.Collections.Generic;
-	using ASYNC = System.Threading.Tasks;
-
+	using Microsoft.EntityFrameworkCore;
 	using SemesterProjectManager.Data;
 	using SemesterProjectManager.Data.Models;
-	using SemesterProjectManager.Data.Models.Enums;
 	using SemesterProjectManager.Web.ViewModels;
-	using Microsoft.EntityFrameworkCore;
+	using System.Collections.Generic;
+	using System.Linq;
+	using ASYNC = System.Threading.Tasks;
 
 	public class TaskService : ITaskService
 	{

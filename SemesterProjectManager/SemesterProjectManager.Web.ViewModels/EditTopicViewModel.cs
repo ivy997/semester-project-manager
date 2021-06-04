@@ -2,7 +2,6 @@
 {
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
-	using SemesterProjectManager.Data.Models;
 	using SemesterProjectManager.Data.Models.Enums;
 
 	public class EditTopicViewModel
@@ -20,11 +19,18 @@
 		public string Description { get; set; }
 
 		[Required]
+		[StringLength(1000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+		[Display(Name = "Requirements")]
+		public string Requirements { get; set; }
+
+		[Required]
 		[Display(Name = "Topic state")]
 		[EnumDataType(typeof(StateOfApproval))]
 		public StateOfApproval StateOfApproval { get; set; }
 
 		public int SubjectId { get; set; }
+
+		public string SubjectName { get; set; }
 
 		public string TeacherFullName { get; set; }
 
@@ -35,9 +41,5 @@
 		public ProjectViewModel Project { get; set; }
 
 		public int FacultyNumber { get; set; }
-
-		//public BufferedSingleFileUploadDbModel FileUpload { get; set; }
-
-		//public CreateTaskViewModel CreateTask { get; set; }
 	}
 }

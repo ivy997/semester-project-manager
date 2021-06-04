@@ -29,6 +29,7 @@
 				{
 					Name = input.Name,
 					TeacherId = input.TeacherId,
+					Description = input.Description,
 				};
 
 				this.context.Subjects.Add(subject);
@@ -36,7 +37,7 @@
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				throw new Exception(ex.Message);
 			}
 		}
 
@@ -71,6 +72,7 @@
 			{
 				Id = subject.Id,
 				Name = subject.Name,
+				Description = subject.Description,
 				TeacherId = subject.TeacherId,
 			};
 
