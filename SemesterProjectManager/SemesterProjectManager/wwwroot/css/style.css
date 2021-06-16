@@ -4633,3 +4633,7 @@ p.form-message.error {
     padding-top: 5px;
     padding-bottom: 25px;
 }
+
+.container-fluid {
+    overflow: hidden !important;
+}

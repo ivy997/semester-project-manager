@@ -57,10 +57,5 @@
             //msg.SetClickTracking(false, false);
             return client.SendEmailAsync(msg);
         }
-
-		//public ASYNC.Task Execute(string apiKey, string subject, string message, string email)
-		//{
-
-		//}
 	}
 }

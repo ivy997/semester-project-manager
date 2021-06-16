@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SemesterProjectManager.Data.Models;
 using SemesterProjectManager.Services;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using ASYNC = System.Threading.Tasks;
 
 namespace SemesterProjectManager.Areas.Identity.Pages.Account.Manage
