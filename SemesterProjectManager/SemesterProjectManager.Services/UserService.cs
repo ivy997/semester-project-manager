@@ -7,7 +7,7 @@
 	using System;
 	using System.Linq;
 	using System.Collections.Generic;
-	using System.Threading.Tasks;
+	using ASYNC = System.Threading.Tasks;
 	using SemesterProjectManager.Web.ViewModels;
 
 	public class UserService : IUserService
@@ -25,23 +25,25 @@
 			this.userManager = userManager;
 		}
 
-		public Task<IList<ApplicationUser>> GetAllUsers()
+		public IEnumerable<ApplicationUser> GetAllUsers()
+		{
+			var users = this.context.Users.Select(x => x);
+
+			return users;
+		}
+
+		public ASYNC.Task<IList<ApplicationUser>> GetStudents()
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<IList<ApplicationUser>> GetStudents()
-		{
-			throw new NotImplementedException();
-		}
-
-		public async Task<IEnumerable<ApplicationUser>> GetTeachers()
+		public async ASYNC.Task<IEnumerable<ApplicationUser>> GetTeachers()
 		{
 			var teachers = await this.userManager.GetUsersInRoleAsync(AccountType.Teacher.ToString());
 			return teachers;
 		}
 
-		public async Task<CreateSubjectInputModel> GetTeachersFullNameWithId()
+		public async ASYNC.Task<CreateSubjectInputModel> GetTeachersFullNameWithId()
 		{
 			var teachers = await this.GetTeachers();
 
@@ -53,7 +55,7 @@
 			return model;
 		}
 
-		public async Task<ApplicationUser> GetUserById(string id)
+		public async ASYNC.Task<ApplicationUser> GetUserById(string id)
 		{
 			var user = await this.userManager.FindByIdAsync(id);
 

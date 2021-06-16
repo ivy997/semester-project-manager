@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using ASYNC = System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SemesterProjectManager.Data.Models;
-using Microsoft.AspNetCore.Authorization;
-using TicketingSystem.Services;
-using Microsoft.AspNetCore.Http;
+using SemesterProjectManager.Services;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using ASYNC = System.Threading.Tasks;
 
 namespace SemesterProjectManager.Areas.Identity.Pages.Account.Manage
 {
@@ -17,13 +13,16 @@ namespace SemesterProjectManager.Areas.Identity.Pages.Account.Manage
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
+		private readonly IUserService _userService;
 
 		public IndexModel(
 			UserManager<ApplicationUser> userManager,
-			SignInManager<ApplicationUser> signInManager)
+			SignInManager<ApplicationUser> signInManager,
+			IUserService userService)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
+			_userService = userService;
 		}
 
 		public string Username { get; set; }
@@ -74,24 +73,28 @@ namespace SemesterProjectManager.Areas.Identity.Pages.Account.Manage
 			};
 		}
 
-		public async ASYNC.Task<IActionResult> OnGetAsync()
+		public async ASYNC.Task<IActionResult> OnGetAsync(string id)
 		{
 			var user = await _userManager.GetUserAsync(User);
+			//var user = await _userService.GetUserById(id);
 			if (user == null)
 			{
 				return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+				//return NotFound($"Unable to load user with ID '{id}'.");
 			}
 
 			await LoadAsync(user);
 			return Page();
 		}
 
-		public async ASYNC.Task<IActionResult> OnPostAsync()
+		public async ASYNC.Task<IActionResult> OnPostAsync(string id)
 		{
 			var user = await _userManager.GetUserAsync(User);
+			//var user = await _userService.GetUserById(id);
 			if (user == null)
 			{
 				return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+				//return NotFound($"Unable to load user with ID '{id}'.");
 			}
 
 			if (!ModelState.IsValid)
@@ -111,13 +114,13 @@ namespace SemesterProjectManager.Areas.Identity.Pages.Account.Manage
 				}
             }
 
-			var userWithFacultyNumber = _userManager.Users.FirstOrDefault(x => x.FacultyNumber == Input.FacultyNumber);
-			if (userWithFacultyNumber != null && await _userManager.IsInRoleAsync(userWithFacultyNumber, "Student"))
-			{
-				string errorMessage = $"There is already a user with faculty number {Input.FacultyNumber}";
-				await LoadAsync(user, errorMessage);
-				return Page();
-			}
+			//var userWithFacultyNumber = _userManager.Users.FirstOrDefault(x => x.FacultyNumber == Input.FacultyNumber);
+			//if (userWithFacultyNumber != null && await _userManager.IsInRoleAsync(userWithFacultyNumber, "Student"))
+			//{
+			//	string errorMessage = $"There is already a user with faculty number {Input.FacultyNumber}";
+			//	await LoadAsync(user, errorMessage);
+			//	return Page();
+			//}
 
 			user.FirstName = Input.FirstName;
 			user.LastName = Input.LastName;

@@ -227,7 +227,7 @@
                                          </a>
                                      </div>
                                  </div>
-                                 @if (User.IsInRole("Teacher"))
+                                 @if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
                                   {
                                       <div class="singel-publication">
                                           <div class="cont">

@@ -7,7 +7,7 @@
 
 	public interface IUserService
 	{
-		public Task<IList<ApplicationUser>> GetAllUsers();
+		public IEnumerable<ApplicationUser> GetAllUsers();
 
 		public Task<ApplicationUser> GetUserById(string id);
 
