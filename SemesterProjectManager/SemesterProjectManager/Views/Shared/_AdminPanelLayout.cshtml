@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Manage account settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <nav class="navbar navbar-expand-lg">
+                <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-area="" asp-controller="Admin" asp-action="Profile" asp-route-id="@ViewData["UserId"]">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Email" asp-route-id="@ViewData["UserId"]">Email</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Password" asp-route-id="@ViewData["UserId"]">Password</a>
+                        </li>
+                        @*<li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="ExternalLogins">ExternalLogins</a>
+                            </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="PersonalData" asp-route-id="@ViewData["UserId"]">Personal Data</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        @RenderBody()
+    </div>
+</div>
+
+@RenderSection("Scripts", required: false)

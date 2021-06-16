@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using SemesterProjectManager.Data.Models;
+using SemesterProjectManager.Services;
 
 namespace SemesterProjectManager.Areas.Identity.Pages.Account.Manage
 {

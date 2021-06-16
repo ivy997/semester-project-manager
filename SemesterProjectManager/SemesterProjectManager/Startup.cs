@@ -1,23 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SemesterProjectManager.Data;
 using SemesterProjectManager.Data.Data;
 using SemesterProjectManager.Data.Models;
-using SemesterProjectManager.Data.Models.Enums;
 using SemesterProjectManager.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebPWrecover.Services;
 
 namespace SemesterProjectManager
 {
@@ -39,14 +29,12 @@ namespace SemesterProjectManager
 			//services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
 			//	.AddEntityFrameworkStores<ApplicationDbContext>();
 
-			//services.AddTransient<IEmailSender, EmailSender>();
-			//services.Configure<AuthMessageSenderOptions>(Configuration);
-
 			services.AddScoped<ISubjectService, SubjectService>();
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<ITopicService, TopicService>();
 			services.AddScoped<ITaskService, TaskService>();
 			services.AddScoped<IProjectService, ProjectService>();
+			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 		}
