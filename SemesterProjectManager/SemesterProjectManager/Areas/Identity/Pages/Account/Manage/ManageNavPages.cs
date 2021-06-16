@@ -40,11 +40,11 @@ namespace SemesterProjectManager.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
 
-        private static string PageNavClass(ViewContext viewContext, string page)
-        {
-            var activePage = viewContext.ViewData["ActivePage"] as string
-                ?? System.IO.Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);
-            return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active" : null;
-        }
-    }
+		private static string PageNavClass(ViewContext viewContext, string page)
+		{
+			var activePage = viewContext.ViewData["ActivePage"] as string
+				?? System.IO.Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);
+			return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active" : null;
+		}
+	}
 }

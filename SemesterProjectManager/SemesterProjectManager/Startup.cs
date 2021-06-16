@@ -8,6 +8,10 @@ using Microsoft.Extensions.Hosting;
 using SemesterProjectManager.Data.Data;
 using SemesterProjectManager.Data.Models;
 using SemesterProjectManager.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SemesterProjectManager
 {
@@ -35,6 +39,7 @@ namespace SemesterProjectManager
 			services.AddScoped<ITaskService, TaskService>();
 			services.AddScoped<IProjectService, ProjectService>();
 			services.AddTransient<IEmailSender, EmailSender>();
+			services.Configure<AuthMessageSenderOptions>(Configuration);
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 		}
@@ -53,7 +58,7 @@ namespace SemesterProjectManager
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
-			app.UseHttpsRedirection();
+			//app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
 			app.UseRouting();
