@@ -1,0 +1,147 @@
+﻿@model SemesterProjectManager.Web.ViewModels.ContactViewModel
+@{
+    ViewData["Title"] = "Contact";
+}
+
+@{ var teachersSelectListItems = Model.Teachers.Select(x => new SelectListItem
+    {
+        Text = x.Value.ToString(),
+        Value = x.Key.ToString()
+    }); 
+}
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(../images/page-banner-2.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont pb-20">
+                    <h2>@ViewData["Title"]</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<section id="contact-page" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="contact-from">
+                    <div class="section-title">
+                        <h5>Contact Us</h5>
+                        <h2>Keep in touch</h2>
+                    </div> <!-- section title -->
+                    <div class="main-form pt-45">
+                        <partial name="_StatusMessagePartial" model="Model.StatusMessage" />
+                        <form id="contact-form" asp-action="Index" method="post" data-toggle="validator">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="singel-form form-group">
+                                        <input asp-for="SenderFullName" class="form-control" disabled>
+                                        <div class="help-block with-errors"></div>
+                                    </div> <!-- singel form -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="singel-form form-group">
+                                        <input asp-for="SenderEmail" class="form-control" disabled>
+                                        <div class="help-block with-errors"></div>
+                                    </div> <!-- singel form -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="singel-form form-group">
+                                        <input asp-for="MessageSubject" class="form-control" type="text" placeholder="Subject" data-error="Subject is required." required="required">
+                                        <div class="help-block with-errors"></div>
+                                    </div> <!-- singel form -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="singel-form form-group">
+                                        <select class="contact-teachers-dropdown form-control" data-error="Please select who to message." required="required" asp-for="TeacherId"
+                                                asp-items="teachersSelectListItems">
+                                            <option style="margin-top: 5px !important;" value="">Select who to message</option>
+                                        </select>
+                                        <span class="form-text" asp-validation-for="TeacherId"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div> <!-- singel form -->
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="singel-form form-group">
+                                        <textarea asp-for="MessageContent" class="form-control" placeholder="@Html.DisplayNameFor(model => model.MessageContent)" data-error="Please, leave us a message." required="required"></textarea>
+                                        <div class="help-block with-errors"></div>
+                                    </div> <!-- singel form -->
+                                </div>
+                                @*<p class="form-message"></p>*@
+                                <div class="col-md-12">
+                                    <div class="singel-form">
+                                        <button type="submit" class="main-btn">Send</button>
+                                    </div> <!-- singel form -->
+                                </div>
+                            </div> <!-- row -->
+                        </form>
+                    </div> <!-- main form -->
+                </div> <!--  contact from -->
+            </div>
+            <div class="col-lg-4">
+                <div class="contact-address">
+                    <div class="contact-heading">
+                        <h5>Contact information</h5>
+                        @*<p>If you have any further questions, please don’t hesitate to contact me.</p>*@
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="singel-address">
+                                <div class="icon">
+                                    <i class="fa fa-home"></i>
+                                </div>
+                                <div class="cont">
+                                    <p>
+                                        Sofia, ul. „akad. Stefan Mladenov" 1
+                                    </p>
+                                </div>
+                            </div> <!-- singel address -->
+                        </li>
+                        <li>
+                            <div class="singel-address">
+                                <div class="icon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div class="cont">
+                                    <p>(02) 86 21 034</p>
+                                    <p>(02) 80 62 182</p>
+                                </div>
+                            </div> <!-- singel address -->
+                        </li>
+                        <li>
+                            <div class="singel-address">
+                                <div class="icon">
+                                    <i class="fa fa-envelope-o"></i>
+                                </div>
+                                <div class="cont">
+                                    <p>admission@utp.bg</p>
+                                    <p>rectoroffice@utp.bg</p>
+                                </div>
+                            </div> <!-- singel address -->
+                        </li>
+                        <li>
+                            <div class="singel-address">
+                                <div class="icon">
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                                <div class="cont">
+                                    <p>www.utp.bg</p>
+                                </div>
+                            </div> <!-- singel address -->
+                        </li>
+                    </ul>
+                </div> <!-- contact address -->
+
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+
+</section>

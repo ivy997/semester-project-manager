@@ -4617,7 +4617,7 @@ p.form-message.error {
 }
 
 .task-list-margin {
-    margin-left: 70px;
+    margin-left: 120px;
 }
 
 .topic-details-title {
@@ -4636,4 +4636,14 @@ p.form-message.error {
 
 .container-fluid {
     overflow: hidden !important;
+}
+
+.contact-teachers-dropdown {
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+    border: 1px solid #a1a1a1;
+    border-radius: 5px;
+    color: #8a8a8a;
+    font-size: 15px;
 }
