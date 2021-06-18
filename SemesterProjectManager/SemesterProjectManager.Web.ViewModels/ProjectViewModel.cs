@@ -6,8 +6,6 @@
 
 	public class ProjectViewModel : PageModel
 	{
-		
-
 		public int Id { get; set; }
 
 		public int TopicId { get; set; }

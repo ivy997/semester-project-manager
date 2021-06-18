@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using System.Text;
+using System;
 
 namespace SemesterProjectManager.Controllers
 {
@@ -227,5 +228,57 @@ namespace SemesterProjectManager.Controllers
 			return RedirectToAction("Password", "Admin", new { id = id, statusMessage = model.StatusMessage });
 		}
 
+		[ActionName("Delete")]
+		public async ASYNC.Task<IActionResult> DeletePersonalData(string id)
+		{
+			var user = await this.userService.GetUserById(id);
+			if (user == null)
+			{
+				return NotFound($"Unable to load user with ID '{id}'.");
+			}
+
+			var model = new DeletePersonalDataViewModel()
+			{
+				RequirePassword = await this.userManager.HasPasswordAsync(user)
+			};
+
+			return View("Delete", model);
+		}
+
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async ASYNC.Task<IActionResult> DeletePersonalData(string id, DeletePersonalDataViewModel model)
+		{
+			var user = await this.userService.GetUserById(id);
+			if (user == null)
+			{
+				return NotFound($"Unable to load user with ID '{id}'.");
+			}
+
+			model.RequirePassword = await this.userManager.HasPasswordAsync(user);
+			if (model.RequirePassword)
+			{
+				var currUser = await this.userManager.GetUserAsync(User);
+				if (!await this.userManager.CheckPasswordAsync(currUser, model.Password))
+				{
+					ModelState.AddModelError(string.Empty, "Incorrect password.");
+					// Display errors
+					return RedirectToAction("Delete", "Admin", new { id = id });
+				}
+			}
+
+			var result = await this.userManager.DeleteAsync(user);
+			var userId = await this.userManager.GetUserIdAsync(user);
+			if (!result.Succeeded)
+			{
+				throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
+			}
+
+			//await this.signInManager.SignOutAsync();
+
+			this.logger.LogInformation("User with ID '{UserId}' was deleted successfully.", userId);
+
+			return RedirectToAction(nameof(Index));
+		}
 	}
 }

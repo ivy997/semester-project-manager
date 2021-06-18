@@ -25,8 +25,8 @@
 
 <section id="teachers-page" class="pt-90 pb-120 gray-bg">
     <div class="container">
-        <div>
-            <div class="">
+        <div class="row">
+            <div class="col">
                 <ul>
                     @foreach (var item in Model)
                     {
@@ -40,25 +40,25 @@
                                             <span>@initials</span>
                                         </div>
                                     </div>
-                                    <div class="author-name col-3 mt-2 remove-padding-left">
+                                    <div class="author-name col-6 mt-2 remove-padding-left">
                                         <h6>@Html.DisplayFor(modelItem => item.FullName)</h6>
-                                        @if (item.EmailConfirmed) 
-                                         {
-                                             <span><i class="fa fa-check-circle-o"></i> @Html.DisplayFor(modelItem => item.Email)</span> 
-                                         } 
-                                         else 
-                                         {
-                                             <span><i class="fa fa-close"></i> @Html.DisplayFor(modelItem => item.Email)</span> 
-                                         }
+                                        @if (item.EmailConfirmed)
+                                        {
+                                            <span><i class="fa fa-check-circle-o"></i> @Html.DisplayFor(modelItem => item.Email)</span>
+                                        }
+                                        else
+                                        {
+                                            <span><i class="fa fa-close"></i> @Html.DisplayFor(modelItem => item.Email)</span>
+                                        }
                                         <br />
                                         <span><i class="fa fa-user-circle"></i> @Html.DisplayFor(modelItem => item.AccountType)</span>
                                     </div>
-                                    <div class="col-3 task-list-margin">
+                                    <div class="col-3 user-list-margin">
                                         <div class="mt-3">
                                             <div class="cont ">
                                                 <div class="col-2 ml-4">
                                                     <div class="button">
-                                                        <a class="main-btn hover-success" style="width: 69px" asp-controller="Admin" asp-action="Profile" asp-route-id="@item.Id">View</a>
+                                                        <a class="main-btn" style="width: 69px" asp-controller="Admin" asp-action="Profile" asp-route-id="@item.Id">Manage</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-2 ml-5">
@@ -66,11 +66,11 @@
                                                         <a class="main-btn hover-danger" style="width: 69px;" asp-controller="Admin" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                                     </div>
                                                 </div>
-                                                <div class="col-2 ml-5">
+                                                @*<div class="col-2 ml-5">
                                                     <div class="button">
-                                                        <a class="main-btn hover-danger" style="width: 69px;" asp-controller="Admin" asp-action="Details" asp-route-id="@item.Id">View</a>
+                                                        <a class="main-btn" style="width: 69px;" asp-controller="Admin" asp-action="Details" asp-route-id="@item.Id">Roles</a>
                                                     </div>
-                                                </div>
+                                                </div>*@
                                             </div>
                                         </div>
                                     </div>
@@ -81,6 +81,6 @@
                     }
                 </ul>
             </div>
-        </div> <!-- row -->
+        </div>
     </div> <!-- container -->
 </section>
