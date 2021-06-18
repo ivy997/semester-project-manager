@@ -24,7 +24,7 @@
 		{
             var apiKey = config["SPM_API_KEY"];
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("avi1999@abv.bg", "Semester Project Manager");
+            var from = new EmailAddress("spm_admin@mail.bg", "Semester Project Manager");
             var to = new EmailAddress(email);
             var plainTextContent = "";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlMessage);

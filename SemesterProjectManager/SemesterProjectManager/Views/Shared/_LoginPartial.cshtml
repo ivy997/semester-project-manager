@@ -14,6 +14,14 @@
                 <button type="submit" class="main-btn">Logout</button>
             </form>
         </div>
+        @if (User.IsInRole("Admin")) 
+         {
+             <div class="float-right mt-3 ml-3">
+             <div class="button float-left">
+                 <a class="main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
+             </div>
+        </div>
+         }
         <div class="float-right mt-3" id="profileImage">
             <span>@user.FirstName[0]@user.LastName[0]</span>
         </div>
@@ -29,11 +37,6 @@ else
         <div class="float-right mt-3">
             <div class="button float-left ml-3">
                 <a class="main-btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
-            </div>
-        </div>
-        <div class="float-right mt-3">
-            <div class="button float-left">
-                <a class="main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
             </div>
         </div>
     </div>

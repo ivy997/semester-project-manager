@@ -5,7 +5,7 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="container">
+<div class="container mb-150">
     <h1>@ViewData["Title"]</h1>
 
     <div class="row">
@@ -15,34 +15,33 @@
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    @*<label asp-for="Input.FirstName"></label>*@
                     <input asp-for="Input.FirstName" class="form-control" placeholder="First name" />
                     <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    @*<label asp-for="Input.LastName"></label>*@
                     <input asp-for="Input.LastName" class="form-control" placeholder="Last name" />
                     <span asp-validation-for="Input.LastName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    @*<label asp-for="Input.Email"></label>*@
                     <input asp-for="Input.Email" class="form-control" placeholder="Email" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    @*<label asp-for="Input.Password"></label>*@
                     <input asp-for="Input.Password" class="form-control" placeholder="Password" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    @*<label asp-for="Input.ConfirmPassword"></label>*@
                     <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm password" />
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
+                    <div class="form-group">
+                        <input asp-for="Input.FacultyNumber" type="text" class="form-control" placeholder="Faculty number (for students)" />
+                        <span asp-validation-for="Input.FacultyNumber" class="text-danger"></span>
+                    </div>
+                
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-4">
-                            @*<label asp-for="Input.AccountType"></label>*@
                             <select class="form-control" asp-for="Input.AccountType" asp-items="Html.GetEnumSelectList<AccountType>()">
                                 <option>
                                     Select Role
@@ -59,7 +58,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-6 col-md-offset-2">
+        @*<div class="col-md-6 col-md-offset-2">
             <section>
                 <h4>Use another service to register.</h4>
                 <hr />
@@ -67,10 +66,10 @@
                     if ((Model.ExternalLogins?.Count ?? 0) == 0)
                     {
                         <div>
-                            @*<p>
+                            <p>
                                 There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
                                 for details on setting up this ASP.NET application to support logging in via external services.
-                            </p>*@
+                            </p>
                         </div>
                     }
                     else
@@ -88,7 +87,7 @@
                     }
                 }
             </section>
-        </div>
+        </div>*@
     </div>
 </div>
 

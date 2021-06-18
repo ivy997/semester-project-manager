@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="FacultyNumber" class="control-label"></label>
-                    <input asp-for="FacultyNumber" class="form-control" disabled />
+                    <input asp-for="FacultyNumber" type="text" class="form-control" disabled />
                     <span asp-validation-for="FacultyNumber" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -39,11 +39,11 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Score" class="control-label"></label>
-                    <input asp-for="Score" class="form-control" />
+                    <input asp-for="Score" type="text" class="form-control" />
                     <span asp-validation-for="Score" class="text-danger"></span>
                 </div>
                 <input type="hidden" asp-for="Id" />
-                <div class="form-group pt-20 pb-10">
+                <div class="form-group pt-10 pb-10">
                     <input type="submit" value="Save" class="main-btn" />
                 </div>
             </form>
