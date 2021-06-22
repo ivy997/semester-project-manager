@@ -89,13 +89,14 @@
 			{
 				subjectToUpdate.Name = input.Name;
 				subjectToUpdate.TeacherId = input.TeacherId;
+				subjectToUpdate.Description = input.Description;
 			}
 			catch (DbUpdateException ex)
 			{
 				Console.WriteLine(ex.Message);
 			}
 
-			this.context.Update(subjectToUpdate);
+			this.context.Subjects.Update(subjectToUpdate);
 			this.context.SaveChanges();
 		}
 
@@ -119,6 +120,22 @@
 
 			this.context.Subjects.Remove(subject);
 			this.context.SaveChanges();
+		}
+
+		public async ASYNC.Task RemoveTeacherFromSubject(ApplicationUser user)
+		{
+			var subjects = this.context.Subjects.Select(x => x).Where(x => x.TeacherId == user.Id);
+
+			if (subjects.Count() != 0)
+			{
+				foreach (var subject in subjects)
+				{
+					subject.TeacherId = null;
+				}
+
+				this.context.Subjects.UpdateRange(subjects);
+				this.context.SaveChanges();
+			}
 		}
 	}
 }

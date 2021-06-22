@@ -49,7 +49,7 @@
 				FacultyNumber = this.userService.GetUserById(x.StudentId).Result.FacultyNumber,
 				TopicName = this.topicService.GetById(x.TopicId).Result.Title,
 				SubjectName = this.subjectService.GetById(this.topicService.GetById(x.TopicId).Result.SubjectId).Result.Name,
-				CreatedOn = x.CreatedOn,
+				CreatedOn = x.CreatedOn.ToLocalTime(),
 				IsApproved = x.IsApproved,
 			});
 
@@ -78,7 +78,7 @@
 				FirstName = user.FirstName,
 				LastName = user.LastName,
 				FacultyNumber = user.FacultyNumber,
-				CreatedOn = DateTime.Now.Date,
+				CreatedOn = DateTime.Now.Date.ToLocalTime(),
 				DueDate = DateTime.Now.Date.AddDays(60),
 				StudentId = user.Id,
 				SubjectId = subjectId,
@@ -101,7 +101,7 @@
 			return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Topics", action = "Details", Id = model.TopicId }));
 		}
 
-		[Authorize(Roles = "Teacher")]
+		[Authorize(Roles = "Admin, Support, Teacher")]
 		public async ASYNC.Task<IActionResult> Edit(int id)
 		{
 			var task = await this.taskService.GetById(id);

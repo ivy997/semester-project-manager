@@ -32,7 +32,7 @@
                             <h1 data-animation="bounceInLeft" data-delay="1s">Semester Project Manager</h1>
                             <p data-animation="fadeInUp" data-delay="1.3s">Project submission has never been easier.</p>
                             <ul>
-                                <li><a asp-action="SendEmail" data-animation="fadeInUp" data-delay="1.6s" class="main-btn">Contact us</a></li>
+                                <li><a asp-controller="Contact" asp-action="Index" data-animation="fadeInUp" data-delay="1.6s" class="main-btn">Contact us</a></li>
                                 @if (!SignInManager.IsSignedIn(this.User))
                                 {
                                     <li><a asp-area="Identity" asp-page="/Account/Login" data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2">Get Started</a></li>
@@ -52,7 +52,7 @@
                             <h1 data-animation="bounceInLeft" data-delay="1s">Semester Project Manager</h1>
                             <p data-animation="fadeInUp" data-delay="1.3s">Project submission has never been easier.</p>
                             <ul>
-                                <li><a data-animation="fadeInUp" data-delay="1.6s" class="main-btn" href="#">Contact us</a></li>
+                                <li><a asp-controller="Contact" asp-action="Index" data-animation="fadeInUp" data-delay="1.6s" class="main-btn">Contact us</a></li>
                                 @if (!SignInManager.IsSignedIn(this.User))
                                 {
                                     <li><a asp-area="Identity" asp-page="/Account/Login" data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2">Get Started</a></li>
@@ -72,7 +72,7 @@
                             <h1 data-animation="bounceInLeft" data-delay="1s">Semester Project Manager</h1>
                             <p data-animation="fadeInUp" data-delay="1.3s">Project submission has never been easier.</p>
                             <ul>
-                                <li><a data-animation="fadeInUp" data-delay="1.6s" class="main-btn" href="#">Contact us</a></li>
+                                <li><a asp-controller="Contact" asp-action="Index" data-animation="fadeInUp" data-delay="1.6s" class="main-btn">Contact us</a></li>
                                 @if (!SignInManager.IsSignedIn(this.User))
                                 {
                                     <li><a asp-area="Identity" asp-page="/Account/Login" data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2">Get Started</a></li>

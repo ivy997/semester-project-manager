@@ -175,19 +175,30 @@
 				topic.StateOfTopic = StateOfApproval.Available;
 			}
 
+			var projectForView = new ProjectViewModel()
+			{
+				Score = project.Score,
+			};
+
 			var topicViewModel = new EditTopicViewModel()
 			{
 				Id = topic.Id,
 				Title = topic.Title,
 				Description = topic.Description,
 				StateOfApproval = topic.StateOfTopic,
+				Project = projectForView,
 				SubjectId = topic.SubjectId,
 				SubjectName = subject.Name,
 				Tasks = tasksForView,
 				TasksCount = tasksForView.Count,
 				FacultyNumber = user.FacultyNumber,
-				TeacherFullName = $"{teacher.Title} {teacher.FirstName} {teacher.LastName}",
+				//TeacherFullName = $"{teacher.Title} {teacher.FirstName} {teacher.LastName}",
 			};
+
+			if (teacher != null)
+			{
+				topicViewModel.TeacherFullName = $"{teacher.Title} {teacher.FirstName} {teacher.LastName}";
+			}
 
 			return View(topicViewModel);
 		}
@@ -229,10 +240,10 @@
 			try
 			{
 				await this.topicService.Delete(id);
-				return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Subjects", action = "Details", Id = subjectId }));
-				//return RedirectToAction("All", "Subjects");
+				//return RedirectToAction("Details", new RouteValueDictionary(new { controller = "Subjects", action = "Details", Id = subjectId }));
+				return RedirectToAction("All", "Topics");
 			}
-			catch (DbUpdateException /* ex */)
+			catch (Exception ex)
 			{
 				//Log the error (uncomment ex variable name and write a log.)
 				return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });

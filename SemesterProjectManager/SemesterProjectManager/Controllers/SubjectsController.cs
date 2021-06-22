@@ -31,16 +31,25 @@
 		[Authorize(Roles = "Admin, Support, Teacher, Student")]
 		public ActionResult<IEnumerable<SubjectViewModel>> All()
 		{
-			// Find a better way to get teacher's full name
+			var subjects = new List<SubjectViewModel>();
 
-			var subjects = this.subjectService.GetAll().Select(x => new SubjectViewModel
+			foreach (var subject in this.subjectService.GetAll())
 			{
-				Id = x.Id,
-				Name = x.Name,
-				TeacherFullName = $"{this.userService.GetUserById(x.TeacherId).Result.Title}" + " " +
-								  $"{this.userService.GetUserById(x.TeacherId).Result.FirstName}" + " " +
-								  $"{this.userService.GetUserById(x.TeacherId).Result.LastName}"
-			});
+				var currSubject = new SubjectViewModel()
+				{
+					Id = subject.Id,
+					Name = subject.Name,
+				};
+
+				if (subject.TeacherId != null)
+				{
+					currSubject.TeacherFullName = $"{this.userService.GetUserById(subject.TeacherId).Result.Title}" + " " +
+												  $"{this.userService.GetUserById(subject.TeacherId).Result.FirstName}" + " " +
+												  $"{this.userService.GetUserById(subject.TeacherId).Result.LastName}";
+				}
+
+				subjects.Add(currSubject);
+			}
 
 			return this.View("All", subjects);
 		}
@@ -104,6 +113,7 @@
 
 			subjectToEdit.Id = subject.Id;
 			subjectToEdit.Name = subject.Name;
+			subjectToEdit.Description = subject.Description;
 			subjectToEdit.TeacherId = subject.TeacherId;
 
 			return View(subjectToEdit);
@@ -134,7 +144,7 @@
 			{
 				Id = subject.Id,
 				Name = subject.Name,
-				TeacherFullName = $"{teacher.Title} {teacher.FirstName} {teacher.LastName}",
+				//TeacherFullName = $"{teacher.Title} {teacher.FirstName} {teacher.LastName}",
 			};
 
 			if (saveChangesError.GetValueOrDefault())

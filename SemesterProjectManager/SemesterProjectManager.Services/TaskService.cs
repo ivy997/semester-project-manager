@@ -72,7 +72,7 @@
 			{
 				MainTask = taskModel.MainTask,
 				OutputData = taskModel.OutputData,
-				CreatedOn = taskModel.CreatedOn,
+				CreatedOn = taskModel.CreatedOn.ToUniversalTime(),
 				DueDate = taskModel.DueDate,
 				TopicId = taskModel.TopicId,
 				StudentId = taskModel.StudentId,
@@ -95,6 +95,7 @@
 			// Try to make it async
 			Task taskToUpdate = await this.GetById(id);
 			Topic topicToUpdate = await this.topicService.GetById(model.TopicId);
+			ApplicationUser student = await this.userService.GetUserById(model.StudentId);
 
 			// Fix error handling (but in controller)
 			// Think about asynchronously updating the database
@@ -107,21 +108,28 @@
 			if (model.IsApproved)
 			{
 				topicToUpdate.StudentId = model.StudentId;
+				student.TopicId = model.TopicId;
 			}
 
 			this.context.Tasks.Update(taskToUpdate);
 			this.context.Topics.Update(topicToUpdate);
+			this.context.Users.Update(student);
 			this.context.SaveChanges();
 		}
 
 		public async ASYNC.Task Delete(int id)
 		{
-			Task task = await this.GetById(id);
-			Topic topicToUpdate = await this.topicService.GetById(task.TopicId);
+			// Threading error
+			Task task = this.GetById(id).Result;
+			Topic topicToUpdate = this.topicService.GetById(task.TopicId).Result;
+			ApplicationUser student = await this.userService.GetUserById(task.StudentId);
+
 			topicToUpdate.StudentId = null;
+			student.TaskId = null;
 
 			this.context.Tasks.Remove(task);
 			this.context.Topics.Update(topicToUpdate);
+			this.context.Users.Update(student);
 			this.context.SaveChanges();
 		}
 	}

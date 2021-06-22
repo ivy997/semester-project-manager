@@ -7,7 +7,7 @@
         Value = x.Key.ToString()
     }); }
 
-<div class="container">
+<div class="container mb-100">
     <h2>Create</h2>
     <h4 class="title pt-10 pb-25">Subject</h4>
     <form asp-action="Create">
@@ -34,7 +34,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     @*<label asp-for="TeacherId" class="control-label"></label>*@
-                    <select class="form-control" asp-for="TeacherId"
+                    <select style="height: 10px; overflow-y: scroll; scroll-behavior: smooth" class="form-control" asp-for="TeacherId"
                             asp-items="teachersSelectListItems">
                         <option value="">Select</option>
                     </select>
