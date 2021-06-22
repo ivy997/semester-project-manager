@@ -10,8 +10,8 @@ using ASYNC = System.Threading.Tasks;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
-using System.Text;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SemesterProjectManager.Controllers
 {
@@ -20,6 +20,10 @@ namespace SemesterProjectManager.Controllers
 		private readonly UserManager<ApplicationUser> userManager;
 		private readonly SignInManager<ApplicationUser> signInManager;
 		private readonly IUserService userService;
+		private readonly ITopicService topicService;
+		private readonly ITaskService taskService;
+		private readonly IProjectService projectService;
+		private readonly ISubjectService subjectService;
 		private readonly IEmailSender emailSender;
 		private readonly ILogger<AdminController> logger;
 		private readonly UrlEncoder urlEncoder;
@@ -29,6 +33,10 @@ namespace SemesterProjectManager.Controllers
 		public AdminController(UserManager<ApplicationUser> userManager,
 			SignInManager<ApplicationUser> signInManager,
 			IUserService userService,
+			ITopicService topicService,
+			ITaskService taskService,
+			IProjectService projectService,
+			ISubjectService subjectService,
 			IEmailSender emailSender,
 			ILogger<AdminController> logger,
 			UrlEncoder urlEncoder)
@@ -36,12 +44,17 @@ namespace SemesterProjectManager.Controllers
 			this.userManager = userManager;
 			this.signInManager = signInManager;
 			this.userService = userService;
+			this.topicService = topicService;
+			this.taskService = taskService;
+			this.projectService = projectService;
+			this.subjectService = subjectService;
 			this.emailSender = emailSender;
 			this.logger = logger;
 			this.urlEncoder = urlEncoder;
 		}
 
 		// GET: List all users
+		[Authorize(Roles = "Admin")]
 		public ActionResult<IEnumerable<UserViewModel>> Index()
 		{
 			IEnumerable<UserViewModel> users = this.userService.GetAllUsers().Select(x => new UserViewModel
@@ -58,6 +71,7 @@ namespace SemesterProjectManager.Controllers
 
 		// GET: HomeController1/Details/5
 		[ActionName("Profile")]
+		[Authorize(Roles = "Admin")]
 		public async ASYNC.Task<IActionResult> ViewProfile(string id, string error = null, string statusMessage = null)
 		{
 			ApplicationUser user = await this.userService.GetUserById(id);
@@ -82,6 +96,7 @@ namespace SemesterProjectManager.Controllers
 
 		//[ActionName("EditProfile")]
 		[HttpPost, ActionName("Profile")]
+		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> EditProfile(string id, ProfileViewModel model)
 		{
@@ -124,6 +139,7 @@ namespace SemesterProjectManager.Controllers
 		}
 
 		[ActionName("Email")]
+		[Authorize(Roles = "Admin")]
 		public async ASYNC.Task<IActionResult> ViewEmail(string id, string statusMessage = null)
 		{
 			ApplicationUser user = await this.userService.GetUserById(id);
@@ -143,6 +159,7 @@ namespace SemesterProjectManager.Controllers
 		}
 
 		[HttpPost, ActionName("Email")]
+		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> EditEmail(string id, EmailViewModel model)
 		{
@@ -181,6 +198,7 @@ namespace SemesterProjectManager.Controllers
 		}
 
 		[ActionName("Password")]
+		[Authorize(Roles = "Admin")]
 		public async ASYNC.Task<IActionResult> ChangePassword(string id, string error = null, string statusMessage = null)
 		{
 			var user = await this.userService.GetUserById(id);
@@ -196,6 +214,7 @@ namespace SemesterProjectManager.Controllers
 		}
 
 		[HttpPost, ActionName("Password")]
+		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> ChangePassword(string id, PasswordViewModel model)
 		{
@@ -229,6 +248,7 @@ namespace SemesterProjectManager.Controllers
 		}
 
 		[ActionName("Delete")]
+		[Authorize(Roles = "Admin")]
 		public async ASYNC.Task<IActionResult> DeletePersonalData(string id)
 		{
 			var user = await this.userService.GetUserById(id);
@@ -246,6 +266,7 @@ namespace SemesterProjectManager.Controllers
 		}
 
 		[HttpPost, ActionName("Delete")]
+		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
 		public async ASYNC.Task<IActionResult> DeletePersonalData(string id, DeletePersonalDataViewModel model)
 		{
@@ -265,6 +286,25 @@ namespace SemesterProjectManager.Controllers
 					// Display errors
 					return RedirectToAction("Delete", "Admin", new { id = id });
 				}
+			}
+
+			try
+			{
+				if (user.TaskId != null)
+				{
+					await this.taskService.Delete(user.TaskId.Value);
+				}
+
+				if (user.ProjectId != null)
+				{
+					await this.projectService.Delete(user.ProjectId.Value);
+				}
+
+				await this.subjectService.RemoveTeacherFromSubject(user);
+			}
+			catch (Exception)
+			{
+				throw;
 			}
 
 			var result = await this.userManager.DeleteAsync(user);

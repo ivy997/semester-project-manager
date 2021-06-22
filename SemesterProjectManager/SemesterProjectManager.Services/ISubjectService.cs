@@ -24,6 +24,8 @@
 
 		public ASYNC.Task DeleteConfirmed(int id);
 
+		public ASYNC.Task RemoveTeacherFromSubject(ApplicationUser user);
+
 		//public string Test(int id);
 	}
 }

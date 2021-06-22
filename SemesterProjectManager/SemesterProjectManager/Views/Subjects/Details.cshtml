@@ -34,7 +34,7 @@
             <div class="col-lg-4 col-md-8">
                 <div class="teachers-left mt-50">
                     <div class="hero">
-                        <img src="../../../images/teachers/t-1.jpg" alt="Teachers">
+                        <img src="../../../images/subject/s-1.png" alt="Teachers">
                     </div>
                     <div class="corses-singel-left remove-padding">
                         <div class="course-terms">
@@ -58,15 +58,8 @@
                         <span>Vice chencelor</span>
                     </div>*@
                     <div class="social">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
-                        </ul>
                     </div>
                     <div class="description">
-                        <p>Gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate..</p>
                     </div>
                 </div> <!-- teachers left -->
             </div>
@@ -76,23 +69,16 @@
                         <li class="nav-item">
                             <a class="active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</a>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a id="courses-tab" data-toggle="tab" href="#courses" role="tab" aria-controls="courses" aria-selected="false">Courses</a>
-                        </li>
+                        </li>*@
                     </ul> <!-- nav -->
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                             <div class="dashboard-cont">
                                 <div class="singel-dashboard pt-40">
-                                    <h5>About</h5>
-                                    <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
-                                </div> <!-- singel dashboard -->
-                                <div class="singel-dashboard pt-40">
-                                    <h5>Acchivments</h5>
-                                    <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
-                                </div> <!-- singel dashboard -->
-                                <div class="singel-dashboard pt-40">
-                                    <h5>My Objective</h5>
+                                    <h5>@Html.DisplayNameFor(model => model.Description)</h5>
+                                    <p>@Html.DisplayFor(model => model.Description)</p>
                                     <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
                                 </div> <!-- singel dashboard -->
                             </div> <!-- dashboard cont -->
@@ -100,80 +86,7 @@
                         <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
                             <div class="courses-cont pt-20">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="singel-course mt-30">
-                                            <div class="thum">
-                                                <div class="image">
-                                                    <img src="../../../images/course/cu-2.jpg" alt="Course">
-                                                </div>
-                                                <div class="price">
-                                                    <span>$10</span>
-                                                </div>
-                                            </div>
-                                            <div class="cont border">
-                                                <ul>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                </ul>
-                                                <span>(20 Reviws)</span>
-                                                <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
-                                                <div class="course-teacher">
-                                                    <div class="thum">
-                                                        <a href="#"><img src="../../../images/course/teacher/t-2.jpg" alt="teacher"></a>
-                                                    </div>
-                                                    <div class="name">
-                                                        <a href="#"><h6>Mark anthem</h6></a>
-                                                    </div>
-                                                    <div class="admin">
-                                                        <ul>
-                                                            <li><a href="#"><i class="fa fa-user"></i><span>31</span></a></li>
-                                                            <li><a href="#"><i class="fa fa-heart"></i><span>10</span></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> <!-- singel course -->
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="singel-course mt-30">
-                                            <div class="thum">
-                                                <div class="image">
-                                                    <img src="../../../images/course/cu-3.jpg" alt="Course">
-                                                </div>
-                                                <div class="price">
-                                                    <span>$30</span>
-                                                </div>
-                                            </div>
-                                            <div class="cont border">
-                                                <ul>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                </ul>
-                                                <span>(20 Reviws)</span>
-                                                <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
-                                                <div class="course-teacher">
-                                                    <div class="thum">
-                                                        <a href="#"><img src="../../../images/course/teacher/t-2.jpg" alt="teacher"></a>
-                                                    </div>
-                                                    <div class="name">
-                                                        <a href="#"><h6>Mark anthem</h6></a>
-                                                    </div>
-                                                    <div class="admin">
-                                                        <ul>
-                                                            <li><a href="#"><i class="fa fa-user"></i><span>31</span></a></li>
-                                                            <li><a href="#"><i class="fa fa-heart"></i><span>10</span></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> <!-- singel course -->
-                                    </div>
+                                    
                                 </div> <!-- row -->
                             </div> <!-- courses cont -->
                         </div>
@@ -184,15 +97,6 @@
         </div> <!-- row -->
     </div> <!-- container -->
 </section>
-
-
-<!-------------------------------------------------------------------------------------------------------------------------------------->
-
-
-
-
-<!-------------------------------------------------------------------------------------------------------------------------------------->
-
 <div class="gray-bg">
     <div class="container">
 
@@ -200,9 +104,9 @@
             <div class="row">
                 <div class="col pt-20 pb-20">
                     <h2>@Html.DisplayNameFor(model => model.Topics)</h2>
-                    @if (User.IsInRole("Teacher"))
+                    @if (!this.User.IsInRole("Student"))
                     {
-                        <div class=" pt-10 pb-10">
+                        <div class="pt-10 pb-10">
                             <a class="main-btn" asp-route-subjectId="@Model.Id" asp-controller="Topics" asp-action="Create">Create</a>
                         </div>
                     }
@@ -212,14 +116,14 @@
 
         <section id="teachers-page">
                 <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-8">
                         @if (Model.Topics != null)
                         {
                             @foreach (var item in @Model.Topics)
                             {
+                                <div class="col-lg-3 col-md-6 col-sm-8">
                                  <div class="singel-teachers mt-30 text-center">
                                      <div class="image">
-                                         <img src="../../images/teachers/t-1.jpg" alt="Teachers">
+                                         <img src="../../../images/subject/s-1.png" alt="Teachers">
                                      </div>
                                      <div class="cont">
                                          <a class="text-center" asp-controller="Topics" asp-action="Details" asp-route-id="@item.Id">
@@ -240,15 +144,11 @@
                                           </div>
                                       </div>
                                   }
+                                </div>
                             }
                         }
-                    </div>
                 </div> <!-- row -->
                 @*</div>*@  <!-- row -->
         </section>
-
-        <div>
-            <a class="pt-10" asp-action="All">Back to List</a>
-        </div>
     </div>
 </div>

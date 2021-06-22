@@ -15,11 +15,14 @@
 	{
 		private readonly ApplicationDbContext context;
 		private readonly ISubjectService subjectService;
+		private readonly IUserService userService;
 
-		public TopicService(ApplicationDbContext context, ISubjectService subjectService)
+		public TopicService(ApplicationDbContext context, ISubjectService subjectService,
+			 IUserService userService)
 		{
 			this.context = context;
 			this.subjectService = subjectService;
+			this.userService = userService;
 		}
 
 		public IEnumerable<TopicViewModel> GetAll()
@@ -44,6 +47,7 @@
 				Title = input.Title,
 				Description = input.Description,
 				SubjectId = input.SubjectId,
+				Requirements = input.Requirements,
 			};
 
 			this.context.Topics.Add(topic);
@@ -92,6 +96,15 @@
 		public async ASYNC.Task Delete(int id)
 		{
 			var topic = await this.GetById(id);
+
+			var student = await this.userService.GetUserById(topic.StudentId);
+			if (student != null)
+			{
+				student.TaskId = null;
+				student.TopicId = null;
+				student.ProjectId = null;
+				this.context.Users.Update(student);
+			}
 
 			this.context.Topics.Remove(topic);
 			this.context.SaveChanges();

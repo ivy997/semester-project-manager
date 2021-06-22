@@ -81,6 +81,12 @@
 
                 this.context.Projects.Add(project);
                 this.context.SaveChanges();
+
+                var student = await this.userService.GetUserById(studentId);
+                student.ProjectId = project.Id;
+
+                this.context.Users.Update(student);
+                this.context.SaveChanges();
             }
         }
 
@@ -121,7 +127,7 @@
         public async ASYNC.Task Delete(int id)
         {
             var project = await this.GetById(id);
-
+            
             this.context.Projects.Remove(project);
             this.context.SaveChanges();
         }

@@ -23,7 +23,7 @@ namespace SemesterProjectManager.Data.Models
 
 		public byte[] ProjectFile { get; set; }
 
-		public DateTime CreatedOn { get; set; }
+		public DateTime CreatedOn { get; set; } = DateTime.UtcNow.Date;
 
 		public int Score { get; set; }
 	}

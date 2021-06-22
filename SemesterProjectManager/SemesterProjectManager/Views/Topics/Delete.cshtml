@@ -29,30 +29,6 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.StateOfApproval)
             </dd>
-            @*<dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.Subject)
-                </dt>
-                <dd class = "col-sm-10">
-                    @Html.DisplayFor(model => model.Subject.Name)
-                </dd class>
-                <dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.Task)
-                </dt>
-                <dd class = "col-sm-10">
-                    @Html.DisplayFor(model => model.Task.MainTask)
-                </dd class>
-                <dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.Project)
-                </dt>
-                <dd class = "col-sm-10">
-                    @Html.DisplayFor(model => model.Project.Id)
-                </dd class>
-                <dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.ExpirationDate)
-                </dt>
-                <dd class = "col-sm-10">
-                    @Html.DisplayFor(model => model.ExpirationDate)
-                </dd>*@
         </dl>
 
         <form asp-action="Delete">
@@ -60,8 +36,8 @@
             <input type="hidden" asp-for="Id" />
             <input type="submit" value="Delete" class="main-btn hover-danger" />
         </form>
-        <div class="pt-10">
+        @*<div class="pt-10">
             <a asp-controller="Subjects" asp-action="Details" asp-route-id="@Model.SubjectId">Back to List</a>
-        </div>
+        </div>*@
     </div>
 </div>
